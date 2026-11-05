@@ -11,6 +11,7 @@
  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;900&family=Heebo:wght@400;500;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Restaurant","name":"Pizza Manch Haifa","alternateName":"פיצה מאנצ׳ חיפה","servesCuisine":"Pizza","telephone":"+97248102091","address":{"@type":"PostalAddress","streetAddress":"HaYam Road 3","addressLocality":"Haifa","addressCountry":"IL"},"potentialAction":{"@type":"OrderAction","target":{"@type":"EntryPoint","urlTemplate":"https://order.bitetech.co.il"}}}</script>
+<script>(function(h){try{if(!matchMedia("(prefers-reduced-motion:reduce)").matches){h.classList.add("mo");setTimeout(function(){if(!window.__mfx)h.classList.remove("mo")},5000)}}catch(e){}})(document.documentElement)</script>
 <style>
 /* legacy fallbacks (older iOS Safari: no inset/aspect-ratio/svh) */
 .sig .im,.sig:before,.hero:after,.ex .ph,.ex:before,.mc .im,.mc:before,.fin .im,.fin:before,.off{top:0;right:0;bottom:0;left:0}
@@ -148,10 +149,43 @@ main:focus{outline:none}body.nolock{overflow:hidden}
 .rev a{border:0;text-decoration:underline;text-underline-offset:5px;padding:14px 0;margin-top:6px}
 footer a:not(.logo){display:inline-block;padding:9px 0}
 @media(min-width:861px) and (max-width:1399px){.seal{left:calc(var(--S)*.14 - 84px);bottom:auto;top:calc((max(100svh,720px) - 98px)/2 + var(--S)*.26 - 84px)}}
+/* MOTION LAYER (GSAP). Everything below only applies when GSAP loaded (html.gs) or the loader is showing (html.mo). */
+.ld,.ld2{display:none}
+.mo .ld,.mo .ld2{display:flex;position:fixed;top:0;right:0;bottom:0;left:0;align-items:center;justify-content:center}
+.mo .ld{z-index:201;background:#140c07;color:var(--cream)}
+.mo .ld2{z-index:200;background:var(--red)}
+.ld-c{display:flex;flex-direction:column;align-items:center;gap:22px;width:min(520px,80vw)}
+.ld-w{display:flex;overflow:hidden;font:600 clamp(54px,11vw,128px)/1.05 'Playfair Display',serif;letter-spacing:.14em;padding-inline-start:.14em}
+.ld-w span{display:inline-block;will-change:transform}
+.ld-b{width:100%;height:1px;background:rgba(245,235,221,.16);overflow:hidden}
+.ld-b i{display:block;height:100%;background:var(--or);transform:scaleX(0);transform-origin:100% 50%}
+.ld-m{width:100%;display:flex;justify-content:space-between;font-size:12px;letter-spacing:.28em;color:#cbbba6}
+.ld-m b{font:500 12px var(--sans);letter-spacing:.1em;font-variant-numeric:tabular-nums;color:var(--or)}
+.prog{position:fixed;top:0;inset-inline:0;height:2px;z-index:40;background:linear-gradient(90deg,var(--red),var(--or));transform:scaleX(0);transform-origin:100% 50%;pointer-events:none}
+.en .prog,.en .ld-b i{transform-origin:0 50%}
+.gs{scroll-behavior:auto}
+.gs .rv,.gs .sig .im,.gs .mc .im,.gs .btn{transition:none}
+.gs .btn{transition:box-shadow .35s,background-color .35s}
+.gs .btn:hover{transform:none;box-shadow:0 18px 44px rgba(201,50,36,.55),inset 0 1px 0 rgba(255,255,255,.22)}
+.gs .btn.o:hover{box-shadow:none;background:rgba(245,235,221,.1)}
+.gs .mc:hover .im{transform:none}
+.sl-mask{padding-block:.12em;margin-block:-.12em}
+.gs .mp .row{overflow:hidden}
+.gs .mg{perspective:1400px}
+.mc:after{content:"";position:absolute;top:0;right:0;bottom:0;left:0;pointer-events:none;opacity:0;transition:opacity .5s;background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),rgba(245,235,221,.16),transparent 60%)}
+.mc:hover:after{opacity:1}
+.ly img{transform:translate(-50%,calc(-50% + var(--dy,0px))) rotate(var(--r)) scale(var(--s,1))}
+.h2{text-wrap:balance}
+[tabindex="-1"]:focus{outline:none}
+@media(min-width:861px) and (hover:hover){
+ .gs body:after{content:"";position:fixed;top:0;right:0;bottom:0;left:0;z-index:150;pointer-events:none;opacity:.07;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+}
+@media(prefers-reduced-motion:reduce){.mo .ld,.mo .ld2{display:none}.mc:after{display:none}}
 </style>
 <noscript><style>.rv{opacity:1;transform:none}.sig .im{transform:none}</style></noscript>
 </head>
 <body>
+<div class="ld2" id="ld2" aria-hidden="true"></div><div class="ld" id="ld" aria-hidden="true"><div class="ld-c"><div class="ld-w" lang="en" dir="ltr"><span>M</span><span>A</span><span>N</span><span>C</span><span>H</span></div><div class="ld-b"><i></i></div><div class="ld-m"><span>פיצה מאנצ׳ · חיפה</span><b id="ldn">00</b></div></div></div>
 <a class="skip" href="#main" id="skip" data-en="Skip to main content">דלגו לתוכן הראשי</a>
 <nav id="nav" aria-label="ניווט ראשי" data-ae="Main navigation"><a class="logo" href="#home" lang="en">MANCH</a>
 <div class="lk" id="lk"><a href="#home" data-en="Home">בית</a><a href="#menu" data-en="Menu">התפריט</a><a href="#build" data-en="Our pizza">הפיצה שלנו</a><a href="#why" data-en="About">אודות</a><a href="#contact" data-en="Contact">יצירת קשר</a></div>
@@ -162,13 +196,13 @@ footer a:not(.logo){display:inline-block;padding:9px 0}
  <div class="wm" aria-hidden="true">MANCH</div>
  <div class="pz" role="img" aria-label="פיצה שלמה על קרש הגשה מעץ" data-ae="A whole pizza on a wooden serving board"><i></i></div>
  <svg class="seal" viewBox="0 0 160 160" role="img" aria-label="משלוח, איסוף והזמנה אונליין" data-ae="Delivery, pickup and online ordering"><path id="ring" d="M20 80A60 60 0 1 1 140 80A60 60 0 1 1 20 80" fill="none"/><circle cx="80" cy="80" r="78" fill="#F5EBDD"/><circle cx="80" cy="80" r="72" fill="none" stroke="#C93224" stroke-width="1.3"/><text direction="ltr" font-family="Heebo" font-weight="700" font-size="12" letter-spacing="3.4" fill="#171513"><textPath href="#ring">DELIVERY · PICKUP · ORDER ONLINE ·</textPath></text><text x="80" y="89" text-anchor="middle" font-family="Frank Ruhl Libre" font-weight="900" font-size="30" fill="#C93224">מאנצ׳</text></svg>
- <div class="ht">
+ <div class="ht"><div class="hti">
   <div class="eye" data-en="PIZZA MANCH · HAIFA">פיצה מאנצ׳ · חיפה</div>
   <h1 data-en="There’s pizza.<br><b>And there’s Manch.</b>">יש פיצה.<br><b>ויש מאנצ׳.</b></h1>
   <p data-en="Your next bite starts here.">הביס הבא שלכם מתחיל כאן.</p>
   <div class="cta"><a class="btn" href="https://order.bitetech.co.il"><span data-en="Order delivery">הזמינו משלוח</span><svg viewBox="0 0 22 14" fill="none" stroke="#fff" stroke-width="2"><path d="M21 7H1m6-6L1 7l6 6"/></svg></a><a class="l" href="#menu" data-en="View the menu">צפו בתפריט</a></div>
   <div class="chips"><span><bdi dir="ltr">4.2 / 5</bdi> בגוגל</span><span dir="ltr">HaYam Road 3, Haifa</span></div>
- </div>
+ </div></div>
  <div class="strip"><div><small data-en="GOOGLE RATING">דירוג בגוגל</small><b><bdi dir="ltr">4.2 / 5</bdi></b></div><div><small data-en="ADDRESS">כתובת</small><b><bdi dir="ltr" lang="en">HaYam Road 3, Haifa</bdi></b></div><a href="tel:+97248102091"><small data-en="PHONE">טלפון</small><b><bdi dir="ltr">04-810-2091</bdi></b></a><a href="https://order.bitetech.co.il"><small data-en="ORDER ONLINE">הזמנה אונליין</small><b data-en="Delivery & pickup →">משלוח ואיסוף ←</b></a></div>
 </section>
 
@@ -203,9 +237,13 @@ footer a:not(.logo){display:inline-block;padding:9px 0}
 <footer><div><a class="logo" href="#home">MANCH</a>פיצה מאנצ׳ חיפה<br><span lang="en">Pizza Manch Haifa</span></div><div dir="ltr" style="text-align:start">HaYam Road 3, Haifa<br><a href="tel:+97248102091">04-810-2091</a></div><div><a href="https://order.bitetech.co.il" data-en="Order online">הזמנה אונליין</a><br><a href="https://www.google.com/maps/search/?api=1&query=HaYam+Road+3+Haifa" data-en="Directions">הוראות הגעה</a></div></footer>
 
 <div class="bar"><a class="btn" href="https://order.bitetech.co.il"><span data-en="Order delivery">הזמינו משלוח</span><svg viewBox="0 0 22 14" fill="none" stroke="#fff" stroke-width="2.2"><path d="M21 7H1m6-6L1 7l6 6"/></svg></a><a class="call" href="tel:+97248102091" aria-label="חיוג 04-810-2091" data-ae="Call 04-810-2091"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F5EBDD" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></a></div>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollToPlugin.min.js"></script>
 <script>
 (function(){var d=document,$=function(s){return[].slice.call(d.querySelectorAll(s))},rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
-var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.15});$('.rv,.sig').forEach(function(e){io.observe(e)});if(!rm){d.documentElement.classList.add('anim');setTimeout(function(){$('.rv').forEach(function(e){e.classList.add('in')})},2500)}
+var gs=!!(window.gsap&&window.ScrollTrigger);if(!gs){var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.15});$('.rv,.sig').forEach(function(e){io.observe(e)});if(!rm){d.documentElement.classList.add('anim');setTimeout(function(){$('.rv').forEach(function(e){e.classList.add('in')})},2500)}}
 var nav=d.getElementById('nav'),px=$('[data-px]');function sc(){nav.classList.toggle('s',scrollY>40);}addEventListener('scroll',sc,{passive:true});sc();
 var lz=$('img[data-src]');if('IntersectionObserver' in window){var lo=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.src=x.target.dataset.src;lo.unobserve(x.target)}})},{rootMargin:'800px'});lz.forEach(function(e){lo.observe(e)})}else lz.forEach(function(e){e.src=e.dataset.src});
 var lk=d.getElementById('lk'),bg=d.getElementById('bg'),lb=d.getElementById('lang'),h=d.documentElement,en=false,inertEls=$('main,footer,.bar,.skip');
@@ -264,9 +302,202 @@ function render(){var l=L(),on=C.toppings.filter(function(t){return st.top[t.id]
 function load(){if(loaded||!ready)return;loaded=true;build();render()}
 function init(){ready=!!C.base&&C.toppings.some(function(t){return t.src});loaded=false;$('pv').classList.toggle('ready',ready);$('pv').classList.toggle('noprev',!ready);$('lys').innerHTML='';ctl();render();
  if(ready)load()}
-$('bctl').addEventListener('click',function(e){var b=e.target.closest('button');if(!b||b.disabled)return;var k=b.parentNode.dataset.k,v=b.dataset.v;if(k=='top')st.top[v]=!st.top[v];else st[k]=v;render()});
+$('bctl').addEventListener('click',function(e){var b=e.target.closest('button');if(!b||b.disabled)return;var k=b.parentNode.dataset.k,v=b.dataset.v;if(k=='top')st.top[v]=!st.top[v];else st[k]=v;render();if(k=='top')dispatchEvent(new CustomEvent('manchtop',{detail:{id:v,on:!!st.top[v]}}))});
 addEventListener('manchlang',function(){ctl();render()});
 window.MANCH_BUILDER={state:st,setAssets:function(o){for(var k in o)C[k]=o[k];if(o.base&&o.base!=='css')document.documentElement.style.setProperty('--base','url('+o.base+')');init()}};init()})();
+</script>
+<script>
+/* MOTION ENGINE (GSAP 3 + ScrollTrigger + SplitText + ScrollToPlugin).
+   Progressive enhancement: if GSAP fails to load, the page keeps its original CSS reveal system.
+   All scroll animations live in one gsap.matchMedia() so they are reverted/rebuilt on breakpoint
+   or reduced-motion changes; window.MANCH_FX.destroy() tears everything down. */
+(function(){
+var d=document,h=d.documentElement,ld=d.getElementById('ld'),ld2=d.getElementById('ld2');
+function dropLoader(){[ld,ld2].forEach(function(e){e&&e.parentNode&&e.parentNode.removeChild(e)});h.classList.remove('mo')}
+if(!window.gsap||!window.ScrollTrigger){dropLoader();return}
+window.__mfx=true;
+var G=gsap,ST=ScrollTrigger,hasSplit=!!window.SplitText;
+G.registerPlugin(ST);hasSplit&&G.registerPlugin(SplitText);window.ScrollToPlugin&&G.registerPlugin(ScrollToPlugin);
+h.classList.add('gs');
+ST.config({ignoreMobileResize:true});
+var $=function(s,c){return [].slice.call((c||d).querySelectorAll(s))},q=function(s,c){return (c||d).querySelector(s)};
+var reduce=function(){return matchMedia('(prefers-reduced-motion:reduce)').matches};
+var cleanups=[];function on(t,e,f,o){t.addEventListener(e,f,o);cleanups.push(function(){t.removeEventListener(e,f,o)})}
+
+/* ---------- split-text line reveals (language-switch safe) ---------- */
+var live=[];
+function lines(el,vars){vars=vars||{};
+ if(!hasSplit||!el.hasAttribute('data-en'))return G.from(el,Object.assign({y:36,autoAlpha:0,duration:1.1,ease:'expo.out'},vars));
+ var s=SplitText.create(el,{type:'lines',mask:'lines',linesClass:'sl'}),rec={el:el,s:s};live.push(rec);
+ var user=vars.onComplete;
+ rec.tw=G.from(s.lines,Object.assign({yPercent:118,rotation:vars.rot||0,duration:1.2,ease:'expo.out',stagger:.11},vars,{onComplete:function(){var i=live.indexOf(rec);if(i>-1){live.splice(i,1);s.revert()}user&&user()}}));
+ return rec.tw}
+/* the language toggle swaps innerHTML: finish split animations and restore the new language text */
+function flushSplits(){live.splice(0).forEach(function(r){r.tw.kill();r.s.revert();r.el.innerHTML=r.el.getAttribute(h.lang=='en'?'data-en':'data-he')})}
+on(window,'manchlang',function(){flushSplits();requestAnimationFrame(function(){ST.refresh()})});
+
+/* element list -> cascading timeline */
+function cascade(items,o){o=o||{};var tl=G.timeline();items.forEach(function(el,i){var at=i?'<'+(o.gap||.12):0;
+ if(el.matches('h1,h2,p[data-en]'))tl.add(lines(el,el.matches('p')?{stagger:.07,duration:1}:{}),at);
+ else tl.from(el,{y:o.y||30,autoAlpha:0,duration:1,ease:'expo.out'},at)});return tl}
+function list(sel,root){return function(){return $(sel,root).filter(function(e){return e.offsetParent!==null||getComputedStyle(e).position=='fixed'})}}
+
+/* ---------- loader + hero entrance (runs once, outside matchMedia) ---------- */
+var hero=q('.hero'),nav=q('#nav'),pz=q('.hero .pz'),wm=q('.hero .wm'),seal=q('.hero .seal'),strip=q('.hero .strip'),bar=q('.bar');
+var ht=q('.hero .hti');
+function intro(){var tl=G.timeline({defaults:{ease:'expo.out'}});
+ var h1=q('h1',ht),rest=[q('p',ht)].concat($('.cta>*',ht),$('.chips>*',ht));
+ tl.from(pz,{scale:.62,rotation:-70,autoAlpha:0,duration:2.1},0)
+  .from(wm,{yPercent:28,opacity:0,duration:2},.05)
+  .from(q('.eye',ht),{autoAlpha:0,y:18,duration:1},.25)
+  .add(lines(h1,{duration:1.35,stagger:.13}),.32)
+  .from(rest,{autoAlpha:0,y:26,stagger:.08,duration:1.1},.7)
+  .from(strip,{yPercent:101,duration:1.3,ease:'expo.inOut'},.3)
+  .from(strip?strip.children:[],{autoAlpha:0,y:18,stagger:.07,duration:1},.95)
+  .from(seal,{scale:0,rotation:-140,autoAlpha:0,duration:1.6,ease:'back.out(1.25)'},.85)
+  .from(nav,{yPercent:-100,autoAlpha:0,duration:1.1},.55)
+  .from(bar,{yPercent:140,duration:1.1},1)
+  .call(function(){G.set([pz,wm,seal,strip,nav,bar].concat(strip?[].slice.call(strip.children):[],rest,[q('.eye',ht)]),{clearProps:'transform,opacity,visibility'})});
+ return tl}
+var motion=!reduce();
+if(motion){
+ /* the seal's ring of text keeps turning slowly */
+ var ring=seal&&q('text',seal);ring&&G.to(ring,{rotation:-360,svgOrigin:'80 80',duration:28,repeat:-1,ease:'none'});
+}
+if(motion&&ld&&h.classList.contains('mo')){
+ var quick=false;try{quick=sessionStorage.getItem('mfx')=='1';sessionStorage.setItem('mfx','1')}catch(e){}
+ var sp=quick?.45:1,n={v:0},ldn=q('#ldn'),ldb=q('.ld-b i');
+ var fonts=Promise.race([d.fonts&&d.fonts.ready?d.fonts.ready:Promise.resolve(),new Promise(function(r){setTimeout(r,1600)})]);
+ var L=G.timeline();
+ L.from('.ld-w span',{yPercent:115,duration:1*sp,stagger:.07*sp,ease:'expo.out'},0)
+  .from('.ld-m',{autoAlpha:0,y:12,duration:.7*sp,ease:'power3.out'},.25*sp)
+  .to(n,{v:100,duration:1.25*sp,ease:'power2.inOut',onUpdate:function(){ldn.textContent=(n.v<10?'0':'')+Math.round(n.v);G.set(ldb,{scaleX:n.v/100})}},.1*sp);
+ var inDone=new Promise(function(r){L.eventCallback('onComplete',r)});
+ Promise.all([fonts,inDone]).then(function(){
+  var out=G.timeline();
+  out.to('.ld-w span',{yPercent:-115,duration:.7,stagger:.045,ease:'expo.in'},0)
+   .to('.ld-m,.ld-b',{autoAlpha:0,duration:.4},.15)
+   .to(ld,{clipPath:'inset(0% 0% 100% 0%)',duration:1.15,ease:'expo.inOut'},.55)
+   .to(ld2,{clipPath:'inset(0% 0% 100% 0%)',duration:1.15,ease:'expo.inOut'},.68)
+   .add(intro(),1.05)
+   .call(function(){dropLoader();ST.refresh()},null,1.85);
+ });
+}else{dropLoader();if(motion&&scrollY<80)(d.fonts&&d.fonts.ready?d.fonts.ready:Promise.resolve()).then(intro)}
+
+/* ---------- global UI motion (not breakpoint specific) ---------- */
+var prog=d.createElement('div');prog.className='prog';prog.setAttribute('aria-hidden','true');d.body.appendChild(prog);
+var progTw=G.to(prog,{scaleX:1,ease:'none',scrollTrigger:{start:0,end:'max',scrub:.3}});
+/* nav hides while scrolling down, returns on scroll up / focus (never while the mobile menu is open) */
+var lk=q('#lk'),navHidden=false;
+function showNav(show){if(navHidden===!show)return;navHidden=!show;G.to(nav,{yPercent:show?0:-110,duration:show?.55:.45,ease:show?'expo.out':'power3.in',overwrite:'auto',onComplete:function(){if(!navHidden)G.set(nav,{clearProps:'transform'})}})}
+var navST=ST.create({start:0,end:'max',onUpdate:function(s){if(lk.classList.contains('o'))return showNav(true);showNav(!(s.direction===1&&s.scroll()>innerHeight*.7))}});
+on(nav,'focusin',function(){showNav(true)});
+/* mobile menu: stagger links in when it opens */
+on(q('#bg'),'click',function(){if(lk.classList.contains('o')){G.set(nav,{clearProps:'transform'});navHidden=false;if(!reduce())G.from($('a',lk),{y:40,autoAlpha:0,duration:.8,stagger:.06,ease:'expo.out',clearProps:'all'})}});
+/* anchor links glide (ScrollToPlugin), instant with reduced motion; focus moves to the target for keyboard users */
+on(d,'click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a||a.id=='skip'||!window.ScrollToPlugin)return;
+ var id=a.getAttribute('href'),t=id=='#home'||id=='#'?null:q(id);if(id!='#home'&&id!='#'&&!t)return;e.preventDefault();
+ G.to(window,{scrollTo:{y:t||0,offsetY:t?60:0,autoKill:true},duration:reduce()?0:1.3,ease:'expo.inOut',overwrite:true,onComplete:function(){var f=t||q('#main');if(!f.hasAttribute('tabindex'))f.setAttribute('tabindex','-1');f.focus({preventScroll:true})}});
+ history.pushState&&history.pushState(null,'',id)});
+/* builder: toppings drop onto the pizza */
+on(window,'manchtop',function(e){if(!e.detail.on||reduce())return;var ly=q('.ly[data-t="'+e.detail.id+'"]');if(!ly)return;
+ G.fromTo($('img',ly),{'--s':1.9,'--dy':'-46px',opacity:0},{'--s':1,'--dy':'0px',opacity:1,duration:.7,ease:'back.out(1.7)',stagger:{each:.035,from:'random'},overwrite:true})});
+on(q('#bctl')||d,'pointerdown',function(e){var b=e.target.closest&&e.target.closest('#bctl button');if(b&&!b.disabled&&!reduce())G.fromTo(b,{scale:.9},{scale:1,duration:.6,ease:'back.out(3)',clearProps:'transform'})});
+
+/* ---------- scroll choreography ---------- */
+var done=new WeakSet(),mm=G.matchMedia();
+mm.add({desk:'(min-width:861px)',mob:'(max-width:860px)',motion:'(prefers-reduced-motion:no-preference)',fine:'(hover:hover) and (pointer:fine)'},function(ctx){
+ var c=ctx.conditions;if(!c.motion){G.set(prog,{autoAlpha:0});return}
+ var off=[];function lis(t,e,f){t.addEventListener(e,f);off.push(function(){t.removeEventListener(e,f)})}
+
+ /* reveal: hide now, animate once the trigger enters; never re-hides something already revealed */
+ function reveal(trigger,items,o){o=o||{};if(!trigger||done.has(trigger))return;var get=typeof items=='function'?items:function(){return items.filter(Boolean)};
+  var g0=get();g0.length&&G.set(g0,{autoAlpha:0});
+  ST.create({trigger:trigger,start:o.start||'top 80%',once:true,onEnter:function(){ctx.add(function(){done.add(trigger);var els=get();els.length&&G.set(els,{autoAlpha:1});var tl=cascade(els,o);o.then&&o.then(tl)})}})}
+
+ /* HERO: pizza spins & text drifts as you scroll away */
+ var pzi=q('i',pz);
+ G.timeline({scrollTrigger:{trigger:hero,start:'top top',end:'bottom top',scrub:.5}})
+  .to(pzi,{rotation:c.desk?55:35,scale:c.desk?1.08:1,ease:'none'},0)
+  .to(ht,{yPercent:c.desk?-22:-8,opacity:c.desk?.1:1,ease:'none'},0);
+
+ /* SIGNATURE: image opens from a framed window, slow parallax, line reveal */
+ var sig=q('.sig'),sim=q('.im',sig);
+ G.fromTo(sim,{clipPath:'inset(12% 9% 12% 9% round 28px)',scale:1.28},{clipPath:'inset(0% 0% 0% 0% round 0px)',scale:1.06,ease:'none',scrollTrigger:{trigger:sig,start:'top bottom',end:'top 10%',scrub:.6}});
+ G.fromTo(sim,{yPercent:0},{yPercent:(parseFloat(sim.getAttribute('data-px'))||.08)*100,ease:'none',immediateRender:false,scrollTrigger:{trigger:sig,start:'top top',end:'bottom top',scrub:true}});
+ reveal(q('.t',sig),list('.eye,h2,p',q('.t',sig)),{start:'top 75%'});
+
+ /* MENU: header, then cards open bottom-up with an image settle */
+ var menu=q('.menu');reveal(q('.top',menu),list('.eye,h2,p',q('.top',menu)));
+ var cards=$('.mc',menu).filter(function(e){return !done.has(e)});
+ if(cards.length){G.set(cards,{clipPath:'inset(100% 0% 0% 0% round 6px)'});
+  ST.batch(cards,{start:'top 88%',once:true,onEnter:function(b){ctx.add(function(){b.forEach(function(e){done.add(e)});
+   G.timeline().to(b,{clipPath:'inset(0% 0% 0% 0% round 6px)',duration:1.4,ease:'expo.inOut',stagger:.13,clearProps:'clipPath'},0)
+    .from(b.map(function(e){return q('.im',e)}),{scale:1.4,duration:1.8,ease:'expo.out',stagger:.13,clearProps:'transform'},.15)
+    .from(b.map(function(e){return [q('.n',e),q('h3',e),q('span',e)]}).flat(),{y:34,autoAlpha:0,duration:1,ease:'expo.out',stagger:.05,clearProps:'transform,opacity,visibility'},.55)})}})}
+ /* card hover: soft 3D tilt, inner-image drift and a pointer spotlight (precise pointers only) */
+ if(c.fine)$('.mc',menu).forEach(function(card){var im=q('.im',card);G.set(card,{transformPerspective:1100});
+  var rx=G.quickTo(card,'rotationX',{duration:.6,ease:'power3'}),ry=G.quickTo(card,'rotationY',{duration:.6,ease:'power3'}),ix=G.quickTo(im,'x',{duration:.8,ease:'power3'}),iy=G.quickTo(im,'y',{duration:.8,ease:'power3'});
+  lis(card,'pointerenter',function(){G.to(im,{scale:1.09,duration:1.1,ease:'expo.out',overwrite:'auto'})});
+  lis(card,'pointermove',function(e){var r=card.getBoundingClientRect(),px=(e.clientX-r.left)/r.width-.5,py=(e.clientY-r.top)/r.height-.5;
+   rx(-py*6);ry(px*7);ix(-px*16);iy(-py*16);card.style.setProperty('--mx',(px+.5)*100+'%');card.style.setProperty('--my',(py+.5)*100+'%')});
+  lis(card,'pointerleave',function(){rx(0);ry(0);ix(0);iy(0);G.to(im,{scale:1,duration:1.1,ease:'expo.out',overwrite:'auto'})});
+  off.push(function(){G.set([card,im],{clearProps:'transform'})})});
+
+ /* MORE THAN PIZZA: words rise out of the rule, then drift in opposite directions */
+ var mp=q('.mp');reveal(q('.rv',mp),list('.eye,h2',q('.rv',mp)));
+ var words=$('.row a',mp);
+ if(!done.has(q('.row',mp)))G.set(words,{yPercent:105});
+ reveal(q('.row',mp),function(){return []},{start:'top 85%',then:function(){G.fromTo($('.row a',mp),{yPercent:105},{yPercent:0,duration:1.3,ease:'expo.out',stagger:.12})}});
+ if(c.desk)words.forEach(function(w,i){G.fromTo(w,{x:0},{x:(i%2?-1:1)*40,ease:'none',immediateRender:false,scrollTrigger:{trigger:mp,start:'top bottom',end:'bottom top',scrub:true}})});
+
+ /* LAYER BY LAYER: pinned scene on desktop, scrubbed zoom-out on touch */
+ var ex=q('.ex'),ph=q('.ph',ex),ext=q('.t',ex);
+ if(c.desk){var xt=G.timeline({scrollTrigger:{trigger:ex,start:'top top',end:'+=110%',pin:true,scrub:.7,anticipatePin:1}});
+  xt.fromTo(ph,{scale:1.45,opacity:.35},{scale:1,opacity:.95,ease:'none',duration:1},0)
+   .from(q('.eye',ext),{autoAlpha:0,y:24,duration:.25},.1)
+   .from(q('h2',ext),{autoAlpha:0,yPercent:60,scale:.92,duration:.4,ease:'power2.out'},.12)
+   .to(ext,{yPercent:-25,duration:.3,ease:'none'},.7);
+ }else{G.fromTo(ph,{scale:1.3},{scale:1,ease:'none',scrollTrigger:{trigger:ex,start:'top bottom',end:'bottom 30%',scrub:.5}});
+  reveal(ext,list('.eye,h2',ext),{start:'top 80%'})}
+
+ /* BUILDER: the pizza rolls in, controls cascade */
+ var bd=q('#build'),pv=q('#pv'),bc=q('.rv:not(.pv)',bd);
+ if(!done.has(pv)){G.set(pv,{autoAlpha:0});ST.create({trigger:bd,start:'top 75%',once:true,onEnter:function(){ctx.add(function(){done.add(pv);G.set(pv,{autoAlpha:1});
+  G.from(pv,c.desk?{scale:.72,rotation:-90,autoAlpha:0,duration:1.8,ease:'expo.out',clearProps:'transform'}:{y:40,autoAlpha:0,duration:1.2,ease:'expo.out',clearProps:'transform'})})}})}
+ reveal(bc,function(){return $('.eye,h2',bc).concat($('#bctl h3,#bctl button',bc),$('.sum,.btn,.note',bc).filter(function(e){return e.textContent.trim()}))},{gap:.04,y:22,start:'top 78%'});
+
+ /* WHY / REVIEWS / FINAL / FOOTER */
+ var why=q('.why .rv');reveal(why,list('.eye,h2,p,li',why));
+ var rev=q('.rev'),big=q('.big',rev);
+ if(big&&!done.has(big)){var tn=big.firstChild,fin=tn.nodeValue,val=parseFloat(fin)||0;
+  reveal(big,[big],{start:'top 85%',then:function(){var o={v:0};G.from(big,{scale:.8,duration:1.6,ease:'expo.out',transformOrigin:'50% 80%'});G.to(o,{v:val,duration:1.8,ease:'expo.out',onUpdate:function(){tn.nodeValue=o.v.toFixed(1)},onComplete:function(){tn.nodeValue=fin}})}});
+  off.push(function(){tn.nodeValue=fin})}
+ var rv2=$('.rv',rev)[1];reveal(rv2,list('.eye,p,a',rv2),{start:'top 85%'});
+ var f=q('.fin'),fim=q('.im',f),ft=q('.t',f);
+ G.fromTo(fim,{scale:1.3,yPercent:-6},{scale:1,yPercent:6,ease:'none',scrollTrigger:{trigger:f,start:'top bottom',end:'bottom top',scrub:true}});
+ reveal(ft,list('h2,p,.row .btn',ft),{start:'top 75%'});
+ var foot=q('footer');reveal(foot,$('footer>div'),{start:'top 92%',gap:.08});
+
+ /* any other .rv block not covered above */
+ $('.rv').forEach(function(e){if(!e.closest('.sig,.menu,.mp,.ex,.bd,.why,.rev,.fin'))reveal(e,[e])});
+
+ /* magnetic buttons (precise pointers only) */
+ if(c.fine)$('.btn').forEach(function(b){var xs=G.quickTo(b,'x',{duration:.5,ease:'power3'}),ys=G.quickTo(b,'y',{duration:.5,ease:'power3'}),ar=q('svg',b);
+  lis(b,'pointermove',function(e){var r=b.getBoundingClientRect();xs((e.clientX-r.left-r.width/2)*.28);ys((e.clientY-r.top-r.height/2)*.38)});
+  lis(b,'pointerenter',function(){ar&&G.to(ar,{x:-6,duration:.5,ease:'expo.out',overwrite:'auto'})});
+  lis(b,'pointerleave',function(){G.to(b,{x:0,y:0,duration:1,ease:'elastic.out(1,.4)',overwrite:true});ar&&G.to(ar,{x:0,duration:.6,ease:'expo.out',overwrite:'auto'})});
+  off.push(function(){G.set([b,ar],{clearProps:'transform'})})});
+
+ return function(){off.forEach(function(f){f()});flushSplits()};
+});
+
+/* layout can shift once fonts/images settle */
+on(window,'load',function(){ST.refresh()});
+d.fonts&&d.fonts.ready&&d.fonts.ready.then(function(){ST.refresh()});
+
+window.MANCH_FX={mm:mm,refresh:function(){ST.refresh()},destroy:function(){mm.revert();flushSplits();progTw.scrollTrigger.kill();progTw.kill();navST.kill();cleanups.forEach(function(f){f()});prog.remove();h.classList.remove('gs')}};
+})();
 </script>
 </body>
 </html>
