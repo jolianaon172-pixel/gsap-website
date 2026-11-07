@@ -26,7 +26,7 @@ function img(urls){var i=new Image(),k=0,res=null;i.__u=urls;i.__st='idle';i.__p
  var fin=function(st){i.__st=st;res&&res();pvUpdate()};
  i.onload=function(){fin('ok')};i.onerror=function(){if(/\.avif(\?|$)/.test(urls[k]))h.classList.add('no-avif');if(++k<urls.length)i.src=urls[k];else fin('fail')};return i}
 /* URLs come from probe elements: they resolve like every other CSS image URL, and are not affected by the builder's .near gate */
-var pvSlow=false,pvLabel='',pvErrSaid=false,pvMsg=null;
+var pvSlow=false,pvLabel='',pvErrSaid=false,pvSlowSaid=false,pvMsg=null;
 var IMG={base:img(clsUrls('pvw')),white:img(clsUrls('pw')),cheese:img(clsUrls('ly-cheese'))},NV={};
 tops.forEach(function(t){if(t.layer)return;IMG[t.id]=[];for(var i=0;i<8;i++){var u=clsUrls('v-'+t.id+'-'+i);if(!u.length)break;IMG[t.id].push(img(u))}NV[t.id]=IMG[t.id].length});
 probe.className='';
@@ -85,6 +85,8 @@ function sync(){var s=read(),l=L(),S=byId(C.sizes,s.size),sel=selected(s);
  pvLabel=T().pv+': '+T().sizeName(S[l])+', '+desc(it);pvUpdate();
  $('baddt').textContent=editing?T().upd:T().add}
 $('bctl').addEventListener('change',sync);
+/* WCAG 2.4.11: the real radio/checkbox is visually hidden; when it gets keyboard focus, bring its visible label into view */
+$('bctl').addEventListener('focusin',function(e){var t=e.target;if(!t.matches||!t.matches('input.vh'))return;var l=d.querySelector('#bctl label[for="'+t.id+'"]');l&&l.scrollIntoView({block:'nearest'})});
 /* re-place a topping each time it is switched on, so every pizza looks hand-made */
 $('bctl').addEventListener('change',function(e){var t=e.target;if(t.name!='btop'||!t.checked)return;var tp=byId(C.toppings,t.value);if(!tp||tp.layer)return;
  var placed=[];tops.forEach(function(o){if(!o.layer&&o.id!=tp.id&&read().top[o.id])placed.push({w:o.w,ps:pieces[o.id]})});
@@ -171,7 +173,8 @@ function pvUpdate(){var pv=$('pv');if(!pv||!bd)return;var st='',gate=false;
  bd.classList.toggle('ready',show);bd.classList.toggle('pv-error',err);bd.classList.toggle('pv-slow',slow);
  if(started&&!show&&!err)pv.setAttribute('aria-busy','true');else pv.removeAttribute('aria-busy');
  if(pvMsg)pvMsg.textContent=m;pv.setAttribute('aria-label',pvLabel+(m?' – '+m:''));
- if(err&&!pvErrSaid){pvErrSaid=true;toast(T().pvErr)}else if(!err)pvErrSaid=false}
+ if(err&&!pvErrSaid){pvErrSaid=true;toast(T().pvErr)}else if(!err)pvErrSaid=false;
+ if(slow&&!pvSlowSaid){pvSlowSaid=true;toast(T().pvLoad)}else if(!slow)pvSlowSaid=false}
 function imgsReady(){return started&&allImg.every(function(i){return i.complete&&i.naturalWidth})}
 function imgsLoaded(){startImgs();return Promise.all(allImg.map(function(i){return i.__p}))}
 function fillThumbs(){var ch=false;cart.forEach(function(it){if(it.thumb)return;if(!it.pieces)it.pieces=makePieces(seed());var t=thumb({size:it.size,sauce:it.sauce,top:it.top},it.pieces);if(t){it.thumb=t;ch=true}});if(ch)save();return ch}

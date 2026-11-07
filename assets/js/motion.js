@@ -5,7 +5,8 @@
    or reduced-motion changes; window.MANCH_FX.destroy() tears everything down. */
 (function(){
 var d=document,h=d.documentElement,ld=d.getElementById('ld'),ld2=d.getElementById('ld2');
-function dropLoader(){[ld,ld2].forEach(function(e){e&&e.parentNode&&e.parentNode.removeChild(e)});h.classList.remove('mo')}
+function unInert(){[].forEach.call(d.querySelectorAll('[data-ld-inert]'),function(e){e.removeAttribute('inert');e.removeAttribute('data-ld-inert')})}
+function dropLoader(){[ld,ld2].forEach(function(e){e&&e.parentNode&&e.parentNode.removeChild(e)});h.classList.remove('mo');unInert()}
 if(!window.gsap||!window.ScrollTrigger){dropLoader();return}
 window.__mfx=true;
 var G=gsap,ST=ScrollTrigger,hasSplit=!!window.SplitText;
@@ -19,7 +20,7 @@ var cleanups=[];function on(t,e,f,o){t.addEventListener(e,f,o);cleanups.push(fun
 /* ---------- split-text line reveals (language-switch safe) ---------- */
 var live=[];
 function lines(el,vars){vars=vars||{};
- if(!hasSplit||!el.hasAttribute('data-en'))return G.from(el,Object.assign({y:36,autoAlpha:0,duration:1.1,ease:'expo.out'},vars));
+ if(!hasSplit||!el.hasAttribute('data-en'))return G.from(el,Object.assign({y:36,opacity:0,duration:1.1,ease:'expo.out'},vars));
  var s=SplitText.create(el,{type:'lines',mask:'lines',linesClass:'sl'}),rec={el:el,s:s};live.push(rec);
  var user=vars.onComplete;
  rec.tw=G.from(s.lines,Object.assign({yPercent:118,rotation:vars.rot||0,duration:1.2,ease:'expo.out',stagger:.11},vars,{onComplete:function(){var i=live.indexOf(rec);if(i>-1){live.splice(i,1);s.revert()}user&&user()}}));
@@ -31,7 +32,7 @@ on(window,'manchlang',function(){flushSplits();requestAnimationFrame(function(){
 /* element list -> cascading timeline */
 function cascade(items,o){o=o||{};var tl=G.timeline();items.forEach(function(el,i){var at=i?'<'+(o.gap||.12):0;
  if(el.matches('h1,h2,p[data-en]'))tl.add(lines(el,el.matches('p')?{stagger:.07,duration:1}:{}),at);
- else tl.from(el,{y:o.y||30,autoAlpha:0,duration:1,ease:'expo.out'},at)});return tl}
+ else tl.from(el,{y:o.y||30,opacity:0,duration:1,ease:'expo.out'},at)});return tl}
 function list(sel,root){return function(){return $(sel,root).filter(function(e){return e.offsetParent!==null||getComputedStyle(e).position=='fixed'})}}
 
 /* ---------- loader + hero entrance (runs once, outside matchMedia) ---------- */
@@ -54,7 +55,8 @@ function intro(){var tl=G.timeline({defaults:{ease:'expo.out'}});
 var motion=!reduce();
 if(motion){
  /* the seal's ring of text keeps turning slowly */
- var ring=seal&&q('text',seal);ring&&G.to(ring,{rotation:-360,svgOrigin:'80 80',duration:28,repeat:-1,ease:'none'});
+ /* WCAG 2.2.2: auto-moving content must stop within 5 s, so the ring makes one slow turn that settles (was an endless loop) */
+ var ring=seal&&q('text',seal);ring&&G.to(ring,{rotation:-90,svgOrigin:'80 80',duration:4.8,ease:'sine.inOut',delay:1.2});
 }
 if(motion&&ld&&h.classList.contains('mo')){
  var quick=false;try{quick=sessionStorage.getItem('mfx')=='1';sessionStorage.setItem('mfx','1')}catch(e){}
@@ -69,7 +71,7 @@ if(motion&&ld&&h.classList.contains('mo')){
   .to(n,{v:100,duration:1.25*sp,ease:'power2.inOut',onUpdate:function(){ldn.textContent=(n.v<10?'0':'')+Math.round(n.v);G.set(ldb,{scaleX:n.v/100})}},.1*sp);
  var inDone=new Promise(function(r){L.eventCallback('onComplete',r)});
  Promise.all([fonts,inDone]).then(function(){
-  var out=G.timeline();
+  var out=G.timeline();unInert();
   out.to('.ld-w span',{yPercent:-115,duration:.7*so,stagger:.045*so,ease:'expo.in'},0)
    .to('.ld-m,.ld-b',{autoAlpha:0,duration:.4*so},.15*so)
    .to(ld,{clipPath:'inset(0% 0% 100% 0%)',duration:1.15*so,ease:'expo.inOut'},.55*so)
@@ -103,10 +105,20 @@ mm.add({desk:'(min-width:861px)',mob:'(max-width:860px)',motion:'(prefers-reduce
  var c=ctx.conditions;if(!c.motion){G.set(prog,{autoAlpha:0});return}
  var off=[];function lis(t,e,f){t.addEventListener(e,f);off.push(function(){t.removeEventListener(e,f)})}
 
- /* reveal: hide now, animate once the trigger enters; never re-hides something already revealed */
+ /* reveal: hide now, animate once the trigger enters; never re-hides something already revealed.
+    ACCESSIBILITY: hidden with opacity (not visibility), so links/buttons inside stay reachable with Tab; if keyboard focus
+    gets there first, the block is shown at once without animation (focusin handler below). */
+ var pend=[];
  function reveal(trigger,items,o){o=o||{};if(!trigger||done.has(trigger))return;var get=typeof items=='function'?items:function(){return items.filter(Boolean)};
-  var g0=get();g0.length&&G.set(g0,{autoAlpha:0});
-  ST.create({trigger:trigger,start:o.start||'top 80%',once:true,onEnter:function(){ctx.add(function(){done.add(trigger);var els=get();els.length&&G.set(els,{autoAlpha:1});var tl=cascade(els,o);o.then&&o.then(tl)})}})}
+  var g0=get();g0.length&&G.set(g0,{opacity:0});
+  var st=ST.create({trigger:trigger,start:o.start||'top 80%',once:true,onEnter:function(){ctx.add(function(){if(done.has(trigger))return;done.add(trigger);var els=get();els.length&&G.set(els,{opacity:1});var tl=cascade(els,o);o.then&&o.then(tl)})}});
+  pend.push({trigger:trigger,get:get,st:st})}
+ lis(d,'focusin',function(e){var t=e.target;if(!t||!t.closest)return;
+  pend.forEach(function(x){if(!x.trigger.contains(t))return;var els=x.get();
+   if(!done.has(x.trigger)){done.add(x.trigger);x.st.kill();els.length&&G.set(els,{clearProps:'opacity,visibility,transform'})}
+   else els.forEach(function(el){if(el.contains(t)){G.killTweensOf(el);G.set(el,{clearProps:'opacity,visibility,transform'})}})});  /* already animating in: show the focused one now */
+  var card=t.closest('.mc');if(card&&!done.has(card)){done.add(card);G.set(card,{clearProps:'clipPath'})}
+  var row=t.closest('.mp .row');if(row){done.add(row);G.set($('.row a',mp),{yPercent:0})}});
 
  /* HERO: pizza spins & text drifts as you scroll away */
  var pzi=q('i',pz);
@@ -124,10 +136,10 @@ mm.add({desk:'(min-width:861px)',mob:'(max-width:860px)',motion:'(prefers-reduce
  var menu=q('.menu');reveal(q('.top',menu),list('.eye,h2,p',q('.top',menu)));
  var cards=$('.mc',menu).filter(function(e){return !done.has(e)});
  if(cards.length){G.set(cards,{clipPath:'inset(100% 0% 0% 0% round 6px)'});
-  ST.batch(cards,{start:'top 88%',once:true,onEnter:function(b){ctx.add(function(){b.forEach(function(e){done.add(e)});
+  ST.batch(cards,{start:'top 88%',once:true,onEnter:function(b){ctx.add(function(){b=b.filter(function(e){return !done.has(e)});if(!b.length)return;b.forEach(function(e){done.add(e)});
    G.timeline().to(b,{clipPath:'inset(0% 0% 0% 0% round 6px)',duration:1.4,ease:'expo.inOut',stagger:.13,clearProps:'clipPath'},0)
     .from(b.map(function(e){return q('.im',e)}),{scale:1.4,duration:1.8,ease:'expo.out',stagger:.13,clearProps:'transform'},.15)
-    .from(b.map(function(e){return [q('.n',e),q('h3',e),q('span',e)]}).flat(),{y:34,autoAlpha:0,duration:1,ease:'expo.out',stagger:.05,clearProps:'transform,opacity,visibility'},.55)})}})}
+    .from(b.map(function(e){return [q('.n',e),q('h3',e),q('span',e)]}).flat(),{y:34,opacity:0,duration:1,ease:'expo.out',stagger:.05,clearProps:'transform,opacity'},.55)})}})}
  /* card hover: soft 3D tilt, inner-image drift and a pointer spotlight (precise pointers only) */
  if(c.fine)$('.mc',menu).forEach(function(card){var im=q('.im',card);G.set(card,{transformPerspective:1100});
   var rx=G.quickTo(card,'rotationX',{duration:.6,ease:'power3'}),ry=G.quickTo(card,'rotationY',{duration:.6,ease:'power3'}),ix=G.quickTo(im,'x',{duration:.8,ease:'power3'}),iy=G.quickTo(im,'y',{duration:.8,ease:'power3'});

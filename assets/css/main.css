@@ -81,7 +81,7 @@ nav.s{padding-block:16px}nav.s:before{content:"";position:absolute;inset:0;z-ind
 .mg{display:grid;grid-template-columns:1.35fr 1fr 1fr;grid-template-rows:300px 300px;gap:18px}
 .mc{position:relative;overflow:hidden;border-radius:6px;padding:28px;display:flex;flex-direction:column;justify-content:flex-end;color:var(--cream);background:#2a1a10}
 .mc:first-child{grid-row:span 2}
-.mc:before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(20,12,7,.85),rgba(20,12,7,.05) 65%)}
+.mc:before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(20,12,7,.9),rgba(20,12,7,.5) 40%,rgba(20,12,7,.05) 75%)}
 .mc .im{position:absolute;inset:0;transition:transform 1.2s}.mc:hover .im{transform:scale(1.06)}
 .mc:first-child .im{background:var(--pizza) 40% 45%/150%}
 .mc:nth-child(2) .im{background:radial-gradient(circle at 70% 25%,#8d4b27,#2a1a10 70%)}.mc:nth-child(3) .im{background:radial-gradient(circle at 30% 30%,#6b6a2c,#241a0e 72%)}.mc:nth-child(4) .im{background:radial-gradient(circle at 60% 30%,#a8581f,#2a1a10 70%)}
@@ -101,7 +101,7 @@ nav.s{padding-block:16px}nav.s:before{content:"";position:absolute;inset:0;z-ind
 .mp .row a{font:900 clamp(60px,12vw,190px)/1.1 var(--serif);color:transparent;-webkit-text-stroke:1.2px rgba(245,235,221,.55);padding-top:14px;transition:color .4s,-webkit-text-stroke-color .4s}
 .mp .row a:hover{color:var(--or);-webkit-text-stroke-color:var(--or)}
 /* WHY */
-.why{position:relative;padding:clamp(90px,12vw,190px) max(24px,7vw);background:linear-gradient(90deg,rgba(24,14,8,.93),rgba(24,14,8,.55)),var(--pizza) 20% 60%/200%;overflow:hidden}
+.why{position:relative;padding:clamp(90px,12vw,190px) max(24px,7vw);background:linear-gradient(90deg,rgba(24,14,8,.93),rgba(24,14,8,.8)),var(--pizza) 20% 60%/200%;overflow:hidden}
 .why p{max-width:520px;font-size:22px;line-height:1.6;color:#EBDCC6;margin-top:30px}
 .why ul{list-style:none;display:flex;gap:40px;padding:0;margin:44px 0 0;flex-wrap:wrap;font:700 26px var(--serif)}.why li:before{content:"— ";color:var(--or)}
 /* REVIEWS */
@@ -129,11 +129,11 @@ footer .logo{display:block;color:var(--cream);margin-bottom:8px}footer a:hover{c
  .ht{position:relative;transform:none;right:auto;top:auto;width:100%;padding:0 24px}
  .ht h1{font-size:clamp(58px,16.5vw,76px)}.ht p{font-size:19px;margin:14px 0 0}.cta{display:none}.eye{font-size:12px;margin-bottom:12px}
  .chips{display:flex;gap:8px;margin-top:16px;font-size:13px}.chips span{border:1px solid rgba(245,235,221,.3);border-radius:999px;padding:7px 12px}
- .sig{min-height:62vh;align-items:flex-end;padding-bottom:48px}.sig:before{background:linear-gradient(0deg,rgba(24,14,8,.92),rgba(24,14,8,.1) 70%)}.sig .t{margin:0}.sig .im{background-size:230%}
+ .sig{min-height:62vh;align-items:flex-end;padding-bottom:48px}.sig:before{background:linear-gradient(0deg,rgba(24,14,8,.92),rgba(24,14,8,.6) 50%,rgba(24,14,8,.1) 85%)}.sig .t{margin:0}.sig .im{background-size:230%}
  .mg{grid-template-columns:1fr 1fr;grid-template-rows:380px 220px 220px}.mc:first-child{grid-column:span 2;grid-row:auto}.mc:last-child{grid-column:span 2}.mg{grid-template-rows:380px 220px 150px}
  .ex{height:72vh}.ex .st{height:72vh}.ex .ph{object-position:50% 70%}.fin{min-height:66vh}.bd{padding-top:56px;padding-bottom:64px}.menu{padding-block:56px}.mp{padding-block:56px}.why{padding-block:64px}.rev{padding-block:48px}.ex .t{top:10%}
  .mp .row{flex-direction:column;gap:0}.mp .row a{border-bottom:1px solid rgba(245,235,221,.2);padding:6px 0}
- .why{background:linear-gradient(0deg,rgba(24,14,8,.94),rgba(24,14,8,.6)),var(--pizza) 30% 40%/300%}
+ .why{background:linear-gradient(0deg,rgba(24,14,8,.94),rgba(24,14,8,.8)),var(--pizza) 30% 40%/300%}
  .rev{gap:20px}.fin .im{background-size:240%}
  .bar{display:flex;gap:10px;position:fixed;z-index:20;left:0;right:0;bottom:0;padding:12px 12px calc(10px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(20,12,7,0),#140c07 30%)}
  .bar .btn{flex:1;justify-content:center;height:48px;padding:0}.bar .call{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--cream);display:flex;align-items:center;justify-content:center;background:rgba(20,12,7,.6)}
@@ -148,6 +148,17 @@ main:focus{outline:none}body.nolock{overflow:hidden}
 .menu :focus-visible,.rev :focus-visible,.strip :focus-visible{outline-color:#171513}
 .btn:focus-visible{outline-color:#fff;outline-offset:4px;border-radius:999px}.ch button:focus-visible{outline-color:#E9863F}.mc:focus-visible{outline-offset:-6px}
 .logo,.lang,.bg{position:relative;z-index:31}
+/* ACCESSIBILITY (WCAG 1.4.3): text that sits on the pizza photo gets a soft dark halo, so it keeps its contrast over bright toppings */
+.sig .t,.mc h3,.mc span,.ex .t,.why .rv,.hero .eye,#nav .lk a,#nav .logo,#nav .lang{text-shadow:0 0 1px rgba(20,12,7,.95),0 0 3px rgba(20,12,7,.95),0 0 8px rgba(20,12,7,.85),0 0 18px rgba(20,12,7,.75)}
+/* ACCESSIBILITY (WCAG 2.4.11): keep the focused element clear of the fixed nav (top) and the fixed mobile ordering bar (bottom) */
+/* small eyebrow labels that sit on the photo use the lighter orange of the palette (also used for the builder headings) */
+.sig .eye,.ex .eye,.why .eye{color:#F5A25F;text-shadow:0 0 1px #140c07,0 0 2px #140c07,0 0 4px rgba(20,12,7,.95),0 0 10px rgba(20,12,7,.85),0 0 20px rgba(20,12,7,.7)}
+/* ACCESSIBILITY (WCAG 1.4.12): on desktop the hero text was absolutely positioned at a fixed height, so larger text spacing pushed it
+   behind the nav and the info strip. Same position (centred above the strip), but in the flow: it never starts under the nav
+   (112px row) and the hero grows if its text needs more room. */
+@media(min-width:861px){.hero{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(112px,1fr) auto 1fr 98px}.ht{grid-row:2;position:relative;top:auto;right:auto;margin:0 max(24px,7vw) 0 auto;transform:translateY(4%)}}
+html{scroll-padding-top:96px}
+@media(max-width:860px){html{scroll-padding-top:84px;scroll-padding-bottom:96px}}
 /* LTR: CTA arrows point forward (flip the path, not the svg, so GSAP transforms on the svg are unaffected) */
 .en .btn svg path{transform:scaleX(-1);transform-box:fill-box;transform-origin:50% 50%}
 /* decorative arrow spans inside the menu card link label must not get the label's underline/spacing */
