@@ -58,8 +58,11 @@ if(motion){
 }
 if(motion&&ld&&h.classList.contains('mo')){
  var quick=false;try{quick=sessionStorage.getItem('mfx')=='1';sessionStorage.setItem('mfx','1')}catch(e){}
- var sp=quick?.45:1,n={v:0},ldn=q('#ldn'),ldb=q('.ld-b i');
- var fonts=Promise.race([d.fonts&&d.fonts.ready?d.fonts.ready:Promise.resolve(),new Promise(function(r){setTimeout(r,1600)})]);
+ /* PERFORMANCE: same choreography, shorter: sp scales the intro of the loader, so its exit (first visit ~1.2 s to the hero, repeat ~0.9 s; was ~2.4 s / ~1.7 s) */
+ /* if the page took long to get here (slow connection), the visitor already waited: play a much shorter version */
+ var late=window.performance&&performance.now()>1800;
+ var sp=late?.12:quick?.25:.4,so=late?.45:quick?.5:.6,n={v:0},ldn=q('#ldn'),ldb=q('.ld-b i');
+ var fonts=Promise.race([d.fonts&&d.fonts.ready?d.fonts.ready:Promise.resolve(),new Promise(function(r){setTimeout(r,700)})]);
  var L=G.timeline();
  L.from('.ld-w span',{yPercent:115,duration:1*sp,stagger:.07*sp,ease:'expo.out'},0)
   .from('.ld-m',{autoAlpha:0,y:12,duration:.7*sp,ease:'power3.out'},.25*sp)
@@ -67,14 +70,14 @@ if(motion&&ld&&h.classList.contains('mo')){
  var inDone=new Promise(function(r){L.eventCallback('onComplete',r)});
  Promise.all([fonts,inDone]).then(function(){
   var out=G.timeline();
-  out.to('.ld-w span',{yPercent:-115,duration:.7,stagger:.045,ease:'expo.in'},0)
-   .to('.ld-m,.ld-b',{autoAlpha:0,duration:.4},.15)
-   .to(ld,{clipPath:'inset(0% 0% 100% 0%)',duration:1.15,ease:'expo.inOut'},.55)
-   .to(ld2,{clipPath:'inset(0% 0% 100% 0%)',duration:1.15,ease:'expo.inOut'},.68)
-   .add(intro(),1.05)
-   .call(function(){dropLoader();ST.refresh()},null,1.85);
+  out.to('.ld-w span',{yPercent:-115,duration:.7*so,stagger:.045*so,ease:'expo.in'},0)
+   .to('.ld-m,.ld-b',{autoAlpha:0,duration:.4*so},.15*so)
+   .to(ld,{clipPath:'inset(0% 0% 100% 0%)',duration:1.15*so,ease:'expo.inOut'},.55*so)
+   .to(ld2,{clipPath:'inset(0% 0% 100% 0%)',duration:1.15*so,ease:'expo.inOut'},.68*so)
+   .add(intro(),1.05*so)
+   .call(function(){dropLoader();ST.refresh()},null,1.85*so);
  });
-}else{dropLoader();if(motion&&scrollY<80)(d.fonts&&d.fonts.ready?d.fonts.ready:Promise.resolve()).then(intro)}
+}else{dropLoader();if(motion&&scrollY<80&&!window.__mfxLate)(d.fonts&&d.fonts.ready?d.fonts.ready:Promise.resolve()).then(intro)}
 
 /* ---------- global UI motion (not breakpoint specific) ---------- */
 var prog=d.createElement('div');prog.className='prog';prog.setAttribute('aria-hidden','true');d.body.appendChild(prog);

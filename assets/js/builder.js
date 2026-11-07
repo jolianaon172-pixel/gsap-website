@@ -4,8 +4,8 @@
    natural re-placement of pieces, mirror classes for browsers without :has(), and the cart. */
 (function(){var C=window.MANCH_BUILDER_CONFIG,d=document,h=d.documentElement,$=function(i){return d.getElementById(i)},G=window.gsap;
 try{
-var TX={he:{pv:'תצוגת הפיצה',none:'בלי תוספות',sizeName:function(s){return 'פיצה '+s},rmItem:'הסרה',edit:'עריכה',dec:'הפחתת כמות',inc:'הגדלת כמות',add:'הוספה לסל',upd:'עדכון הפיצה בסל',added:'הפיצה נוספה לסל. אפשר לבנות עוד אחת.',updated:'הפיצה בסל עודכנה.',editing:'עורכים פיצה מהסל',count:function(n){return n==1?'פיצה אחת':n+' פיצות'},pizzas:'פיצות',price:'מחיר',total:'סה״כ',priceNote:'המחיר נקבע באתר ההזמנות',copied:'פירוט ההזמנה הועתק.',copyFail:'לא הצלחנו להעתיק. אפשר לסמן את הטקסט ידנית.',cleared:'הסל רוקן.',removed:'הוסר מהסל.',orderTitle:'הזמנה מפיצה מאנצ׳'},
- en:{pv:'Pizza preview',none:'No toppings',sizeName:function(s){return s+' pizza'},rmItem:'Remove',edit:'Edit',dec:'Decrease quantity',inc:'Increase quantity',add:'Add to cart',upd:'Update pizza in cart',added:'Pizza added to your cart. You can build another one.',updated:'The pizza in your cart was updated.',editing:'Editing a pizza from your cart',count:function(n){return n==1?'1 pizza':n+' pizzas'},pizzas:'Pizzas',price:'Price',total:'Total',priceNote:'Price is set on the ordering site',copied:'Order details copied.',copyFail:'Could not copy. You can select the text manually.',cleared:'Cart emptied.',removed:'Removed from cart.',orderTitle:'Order from Pizza Manch'}};
+var TX={he:{pv:'תצוגת הפיצה',pvLoad:'תצוגת הפיצה עדיין נטענת…',pvErr:'לא הצלחנו לטעון את תצוגת הפיצה. אפשר להמשיך לבחור ולהוסיף לסל.',none:'בלי תוספות',sizeName:function(s){return 'פיצה '+s},rmItem:'הסרה',edit:'עריכה',dec:'הפחתת כמות',inc:'הגדלת כמות',add:'הוספה לסל',upd:'עדכון הפיצה בסל',added:'הפיצה נוספה לסל. אפשר לבנות עוד אחת.',updated:'הפיצה בסל עודכנה.',editing:'עורכים פיצה מהסל',count:function(n){return n==1?'פיצה אחת':n+' פיצות'},pizzas:'פיצות',price:'מחיר',total:'סה״כ',priceNote:'המחיר נקבע באתר ההזמנות',copied:'פירוט ההזמנה הועתק.',copyFail:'לא הצלחנו להעתיק. אפשר לסמן את הטקסט ידנית.',cleared:'הסל רוקן.',removed:'הוסר מהסל.',orderTitle:'הזמנה מפיצה מאנצ׳'},
+ en:{pv:'Pizza preview',pvLoad:'The pizza preview is still loading…',pvErr:'The pizza preview could not be loaded. You can still choose your pizza and add it to the cart.',none:'No toppings',sizeName:function(s){return s+' pizza'},rmItem:'Remove',edit:'Edit',dec:'Decrease quantity',inc:'Increase quantity',add:'Add to cart',upd:'Update pizza in cart',added:'Pizza added to your cart. You can build another one.',updated:'The pizza in your cart was updated.',editing:'Editing a pizza from your cart',count:function(n){return n==1?'1 pizza':n+' pizzas'},pizzas:'Pizzas',price:'Price',total:'Total',priceNote:'Price is set on the ordering site',copied:'Order details copied.',copyFail:'Could not copy. You can select the text manually.',cleared:'Cart emptied.',removed:'Removed from cart.',orderTitle:'Order from Pizza Manch'}};
 function L(){return h.lang=='en'?'en':'he'}function T(){return TX[L()]}
 function motion(){return !(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)}
 function byId(list,id){for(var i=0;i<list.length;i++)if(list[i].id==id)return list[i]}
@@ -16,14 +16,19 @@ var bd=$('build'),tops=C.toppings.slice().sort(function(a,b){return a.z-b.z}),LY
 [].forEach.call(d.querySelectorAll('#lys .ly'),function(e){LY[e.getAttribute('data-t')]=e});
 function inp(id){return $(id)}
 /* image URLs come from the CSS (single copy of every asset) */
-function bgUrl(el){var m=(getComputedStyle(el).backgroundImage||'').match(/url\(\s*["']?([^"')]+)["']?\s*\)/);return m?m[1]:''}
-var probe=d.createElement('span');probe.style.cssText='position:absolute;width:0;height:0;overflow:hidden';d.body.appendChild(probe);
-function clsUrl(c){probe.className=c;return bgUrl(probe)}
-function img(src){var i=new Image();i.src=src;return i}
-/* the base image URL is read from the element that paints var(--base), so it is resolved like every other CSS image URL */
-var baseSrc=bgUrl($('pvw'));
-var IMG={base:img(baseSrc),white:img(bgUrl(d.querySelector('.pw'))),cheese:img(bgUrl(LY.cheese))},NV={};
-tops.forEach(function(t){if(t.layer)return;IMG[t.id]=[];for(var i=0;i<8;i++){var u=clsUrl('v-'+t.id+'-'+i);if(!u)break;IMG[t.id].push(img(u))}NV[t.id]=IMG[t.id].length});
+/* display:none: computed styles still give the URLs, but the browser does not fetch images for a hidden probe */
+var probe=d.createElement('span');probe.style.cssText='position:absolute;width:0;height:0;overflow:hidden;display:none';d.body.appendChild(probe);
+/* every url() of a computed background-image, in order: for image-set() that is the AVIF first, then the WebP/JPEG fallback */
+function bgUrls(el){var v=getComputedStyle(el).backgroundImage||'',re=/url\(\s*["']?([^"')]+)["']?\s*\)/g,m,a=[];while((m=re.exec(v)))a.push(m[1]);return a}
+function clsUrls(c){probe.className=c;return bgUrls(probe)}
+/* builder images are created here but only requested by startImgs(); each tries its URLs in order (AVIF, then WebP) */
+function img(urls){var i=new Image(),k=0,res=null;i.__u=urls;i.__st='idle';i.__p=window.Promise?new Promise(function(r){res=r}):null;
+ var fin=function(st){i.__st=st;res&&res();pvUpdate()};
+ i.onload=function(){fin('ok')};i.onerror=function(){if(/\.avif(\?|$)/.test(urls[k]))h.classList.add('no-avif');if(++k<urls.length)i.src=urls[k];else fin('fail')};return i}
+/* URLs come from probe elements: they resolve like every other CSS image URL, and are not affected by the builder's .near gate */
+var pvSlow=false,pvLabel='',pvErrSaid=false,pvMsg=null;
+var IMG={base:img(clsUrls('pvw')),white:img(clsUrls('pw')),cheese:img(clsUrls('ly-cheese'))},NV={};
+tops.forEach(function(t){if(t.layer)return;IMG[t.id]=[];for(var i=0;i<8;i++){var u=clsUrls('v-'+t.id+'-'+i);if(!u.length)break;IMG[t.id].push(img(u))}NV[t.id]=IMG[t.id].length});
 probe.className='';
 
 /* ---------- state ---------- */
@@ -77,7 +82,7 @@ function sync(){var s=read(),l=L(),S=byId(C.sizes,s.size),sel=selected(s);
  CLS.forEach(function(c){bd.classList.remove(c)});sel.forEach(function(id){bd.classList.add('t-'+id)});bd.classList.add('s-'+s.size);if(s.sauce=='none')bd.classList.add('sc-none');if(sel.length)bd.classList.add('any-top');
  var it={size:s.size,sauce:s.sauce,tops:sel},pr=priceOf(it);
  $('sum').innerHTML='<b>'+T().sizeName(S[l])+'</b> · '+desc(it)+(pr!=null?'<br>'+T().price+': <b>₪'+pr+'</b>':'');
- $('pv').setAttribute('aria-label',T().pv+': '+T().sizeName(S[l])+', '+desc(it));
+ pvLabel=T().pv+': '+T().sizeName(S[l])+', '+desc(it);pvUpdate();
  $('baddt').textContent=editing?T().upd:T().add}
 $('bctl').addEventListener('change',sync);
 /* re-place a topping each time it is switched on, so every pizza looks hand-made */
@@ -90,7 +95,7 @@ function defaults(){var s={size:'m',sauce:'tomato',top:{}};C.sizes.forEach(funct
 function newPizza(){write(defaults());placeAll(seed());drawAll();sync();renderCart()}
 
 /* ---------- thumbnail (canvas render of the same layers) ---------- */
-function thumb(s,ps){var N=136,c=d.createElement('canvas');c.width=c.height=N;var x=c.getContext('2d');
+function thumb(s,ps){if(!needed(s).every(function(i){return i.__st=='ok'}))return '';var N=136,c=d.createElement('canvas');c.width=c.height=N;var x=c.getContext('2d');
  try{x.fillStyle='#1e1b18';x.fillRect(0,0,N,N);var k=byId(C.sizes,s.size).k,o=N*(1-k)/2,W=N*k;
   x.drawImage(IMG.base,o,o,W,W);if(s.sauce=='none')x.drawImage(IMG.white,o,o,W,W);if(s.top.cheese)x.drawImage(IMG.cheese,o,o,W,W);
   tops.forEach(function(t){if(t.layer||!s.top[t.id])return;(ps[t.id]||[]).forEach(function(p){var g=IMG[t.id][p.v]||IMG[t.id][0];if(!g)return;var sz=t.w*p.sc*W,ar=g.naturalWidth/g.naturalHeight||1,w=ar>=1?sz:sz*ar,hh=ar>=1?sz/ar:sz;
@@ -100,10 +105,10 @@ function thumb(s,ps){var N=136,c=d.createElement('canvas');c.width=c.height=N;va
 /* ---------- cart ---------- */
 function toast(m){var t=$('btoast');t.textContent='';setTimeout(function(){t.textContent=m},30)}
 function uid(){return Date.now().toString(36)+Math.floor(Math.random()*1e4)}
-$('badd').addEventListener('click',function(){var s=read(),it={size:s.size,sauce:s.sauce,tops:selected(s),top:s.top,pieces:clone(pieces),qty:1},msg;it.thumb=thumb(s,pieces);
+$('badd').addEventListener('click',function(){var s=read(),it={size:s.size,sauce:s.sauce,tops:selected(s),top:s.top,pieces:clone(pieces),qty:1},msg;it.thumb=imgsReady()?thumb(s,pieces):'';
  var i=-1;if(editing)for(var j=0;j<cart.length;j++)if(cart[j].id==editing)i=j;
  if(i>-1){it.id=editing;it.qty=cart[i].qty;cart[i]=it;msg=T().updated}else{it.id=uid();cart.push(it);msg=T().added}
- editing=null;save();renderCart(it.id);fly(it);toast(msg);sync()});
+ editing=null;save();renderCart(it.id);fly(it);toast(msg);sync();if(!it.thumb)ensureThumbs()});
 function fly(it){if(!G||!motion()||!it.thumb)return;var pv=$('pv').getBoundingClientRect(),row=rowOf(it.id),li=row&&row.querySelector('img');if(!li)return;var to=li.getBoundingClientRect();
  if(to.bottom<0||to.top>innerHeight)return;var f=new Image();f.src=it.thumb;f.className='fly';f.alt='';var s=Math.min(pv.width,pv.height);
  f.style.cssText='left:'+pv.left+'px;top:'+pv.top+'px;width:'+s+'px;height:'+s+'px';d.body.appendChild(f);G.set(li,{autoAlpha:0});
@@ -146,20 +151,44 @@ $('bcopy').addEventListener('click',function(){var t=orderText(),ok=function(){t
 $('bclear').addEventListener('click',function(){cart=[];editing=null;save();renderCart();sync();toast(T().cleared);$('badd').focus()});
 
 /* ---------- init ---------- */
+pvMsg=d.createElement('span');pvMsg.className='pv-msg';pvMsg.setAttribute('aria-hidden','true');$('pv').appendChild(pvMsg);
 if('IntersectionObserver' in window)new IntersectionObserver(function(e){d.body.classList.toggle('in-build',e[0].isIntersecting)},{rootMargin:'-20% 0px -20% 0px'}).observe(d.querySelector('.bd-main'));
 addEventListener('manchlang',function(){sync();renderCart()});
 /* saved pizzas whose thumbnail was missing/invalid or whose toppings changed get a fresh thumbnail.
    Used on load and for carts arriving from another tab. Validation has already emptied any unsafe thumb. */
 var allImg=[IMG.base,IMG.white,IMG.cheese];tops.forEach(function(t){if(!t.layer)allImg=allImg.concat(IMG[t.id])});
-function imgsReady(){return allImg.every(function(i){return i.complete&&i.naturalWidth})}
+var started=false;function startImgs(){if(started)return;started=true;allImg.forEach(function(i){if(i.__u[0]){i.__st='loading';i.src=i.__u[0]}else i.__st='fail'});
+ setTimeout(function(){pvSlow=true;pvUpdate()},8000);pvUpdate()}
+/* the images the current pizza needs: base, no-sauce layer, cheese layer, every variant of each selected topping */
+function needed(s){var a=[IMG.base];if(s.sauce=='none')a.push(IMG.white);if(s.top.cheese)a.push(IMG.cheese);tops.forEach(function(t){if(!t.layer&&s.top[t.id])a=a.concat(IMG[t.id])});return a}
+/* The preview is shown (.ready) only when every image it needs has loaded, and the first reveal waits until all builder images
+   have settled or 8 s have passed. A needed image that failed -> clear error state; still loading after 8 s -> loading state.
+   Never an incomplete pizza. Re-evaluated on every image load/failure and every change of the selection (sync). */
+function pvUpdate(){var pv=$('pv');if(!pv||!bd)return;var st='',gate=false;
+ if(started){var n=needed(read());st=n.every(function(i){return i.__st=='ok'})?'ok':n.some(function(i){return i.__st=='fail'})?'fail':'wait';
+  gate=pvSlow||allImg.every(function(i){return i.__st=='ok'||i.__st=='fail'})}
+ var show=st=='ok'&&gate,err=st=='fail',slow=st=='wait'&&pvSlow,m=err?T().pvErr:slow?T().pvLoad:'';
+ bd.classList.toggle('ready',show);bd.classList.toggle('pv-error',err);bd.classList.toggle('pv-slow',slow);
+ if(started&&!show&&!err)pv.setAttribute('aria-busy','true');else pv.removeAttribute('aria-busy');
+ if(pvMsg)pvMsg.textContent=m;pv.setAttribute('aria-label',pvLabel+(m?' – '+m:''));
+ if(err&&!pvErrSaid){pvErrSaid=true;toast(T().pvErr)}else if(!err)pvErrSaid=false}
+function imgsReady(){return started&&allImg.every(function(i){return i.complete&&i.naturalWidth})}
+function imgsLoaded(){startImgs();return Promise.all(allImg.map(function(i){return i.__p}))}
 function fillThumbs(){var ch=false;cart.forEach(function(it){if(it.thumb)return;if(!it.pieces)it.pieces=makePieces(seed());var t=thumb({size:it.size,sauce:it.sauce,top:it.top},it.pieces);if(t){it.thumb=t;ch=true}});if(ch)save();return ch}
 /* images ready: fill now (synchronously, before the caller renders); otherwise fill + re-render once they have decoded */
 function ensureThumbs(){if(!cart.some(function(it){return !it.thumb}))return;
  if(imgsReady()){fillThumbs();return}
- if(window.Promise)Promise.all(allImg.map(function(i){return i.complete&&i.naturalWidth?0:new Promise(function(r){i.addEventListener('load',r);i.addEventListener('error',r)})})).then(function(){try{if(fillThumbs())renderCart()}catch(x){}})}
+ if(window.Promise)imgsLoaded().then(function(){try{if(fillThumbs())renderCart()}catch(x){}})}
 /* another tab changed the cart: same validation as the initial load; key null = storage was cleared */
+var stTok=0;
 addEventListener('storage',function(e){if(e.key!==KEY&&e.key!==null)return;
- try{cart=parseCart(readStore());if(editing&&find(editing)<0)editing=null;ensureThumbs();renderCart();sync()}catch(x){window.console&&console.error('Could not apply the cart from another tab.',x)}});
+ try{var tok=++stTok;cart=parseCart(readStore());if(editing&&find(editing)<0)editing=null;
+  /* thumbnails needed but the builder images are not loaded yet: keep showing the current list until they can be drawn (never a blank thumbnail) */
+  if(window.Promise&&!imgsReady()&&cart.some(function(it){return !it.thumb})){sync();imgsLoaded().then(function(){if(tok!==stTok)return;try{fillThumbs();renderCart();sync()}catch(x){}});return}
+  ensureThumbs();renderCart();sync()}catch(x){window.console&&console.error('Could not apply the cart from another tab.',x)}});
+/* request the builder images (and show its CSS images) once the builder is within ~1.5 screens of the viewport */
+function near(){bd.classList.add('near');startImgs()}
+if('IntersectionObserver' in window){var nio=new IntersectionObserver(function(e){if(e[0].isIntersecting){near();nio.disconnect()}},{rootMargin:'150% 0px'});nio.observe(bd)}else near();
 placeAll(seed());drawAll();sync();ensureThumbs();renderCart();
 window.MANCH_BUILDER={state:read,pieces:function(){return pieces},cart:function(){return cart},newPizza:newPizza,config:C};
 }catch(err){h.classList.remove('js');window.console&&console.error('Pizza builder enhancement failed; the basic builder still works.',err)}

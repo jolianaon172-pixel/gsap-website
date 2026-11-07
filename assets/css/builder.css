@@ -64,31 +64,46 @@ html:not(.js) .js-only,.js .nojs-only{display:none!important}
 @media(min-width:600px) and (max-width:860px){.pv{width:min(44vw,340px)}.bd-ctl label,.bd-ctl button{scroll-margin-top:calc(min(44vw,340px) + 160px)}}
 @media(prefers-reduced-motion:reduce){.pvw,.pv:before{transition:none}.pc,.pw,.ly-cheese{animation:none}}
 /* BUILDER PIECES: each topping variant is a transparent WebP cut from the real topping photos */
-.v-onion-0{background-image:url(../img/toppings/onion-0.webp)}
-.v-onion-1{background-image:url(../img/toppings/onion-1.webp)}
-.v-onion-2{background-image:url(../img/toppings/onion-2.webp)}
-.v-onion-3{background-image:url(../img/toppings/onion-3.webp)}
-.v-pepper-0{background-image:url(../img/toppings/pepper-0.webp)}
-.v-pepper-1{background-image:url(../img/toppings/pepper-1.webp)}
-.v-pepper-2{background-image:url(../img/toppings/pepper-2.webp)}
-.v-pepper-3{background-image:url(../img/toppings/pepper-3.webp)}
-.v-mushrooms-0{background-image:url(../img/toppings/mushrooms-0.webp)}
-.v-mushrooms-1{background-image:url(../img/toppings/mushrooms-1.webp)}
-.v-pepperoni-0{background-image:url(../img/toppings/pepperoni-0.webp)}
-.v-pepperoni-1{background-image:url(../img/toppings/pepperoni-1.webp)}
-.v-pepperoni-2{background-image:url(../img/toppings/pepperoni-2.webp)}
-.v-olives-0{background-image:url(../img/toppings/olives-0.webp)}
-.v-olives-1{background-image:url(../img/toppings/olives-1.webp)}
-.v-olives-2{background-image:url(../img/toppings/olives-2.webp)}
-.v-olives-3{background-image:url(../img/toppings/olives-3.webp)}
-.v-corn-0{background-image:url(../img/toppings/corn-0.webp)}
-.v-corn-1{background-image:url(../img/toppings/corn-1.webp)}
-.v-corn-2{background-image:url(../img/toppings/corn-2.webp)}
-.v-corn-3{background-image:url(../img/toppings/corn-3.webp)}
-.v-corn-4{background-image:url(../img/toppings/corn-4.webp)}
-.v-corn-5{background-image:url(../img/toppings/corn-5.webp)}
-.ly-cheese{background:url(../img/layer-cheese.webp) center/100% 100% no-repeat}
-.pw{background:url(../img/layer-no-sauce.webp) center/100% 100% no-repeat}
+.v-onion-0{background-image:url(../img/toppings/onion-0.webp?v=9a05a7b627)}
+.v-onion-1{background-image:url(../img/toppings/onion-1.webp?v=7e11044a68)}
+.v-onion-2{background-image:url(../img/toppings/onion-2.webp?v=05b1afe96d)}
+.v-onion-3{background-image:url(../img/toppings/onion-3.webp?v=4222459782)}
+.v-pepper-0{background-image:url(../img/toppings/pepper-0.webp?v=c7655851a0)}
+.v-pepper-1{background-image:url(../img/toppings/pepper-1.webp?v=cb18e61e64)}
+.v-pepper-2{background-image:url(../img/toppings/pepper-2.webp?v=aa14e7861b)}
+.v-pepper-3{background-image:url(../img/toppings/pepper-3.webp?v=515148d52c)}
+.v-mushrooms-0{background-image:url(../img/toppings/mushrooms-0.webp?v=a4a3abe3a5)}
+.v-mushrooms-1{background-image:url(../img/toppings/mushrooms-1.webp?v=93eb0fa5c6)}
+.v-pepperoni-0{background-image:url(../img/toppings/pepperoni-0.webp?v=933c3a8222)}
+.v-pepperoni-1{background-image:url(../img/toppings/pepperoni-1.webp?v=0d393f8ac9)}
+.v-pepperoni-2{background-image:url(../img/toppings/pepperoni-2.webp?v=db9cf4ebfb)}
+.v-olives-0{background-image:url(../img/toppings/olives-0.webp?v=f3e8c38b7b)}
+.v-olives-1{background-image:url(../img/toppings/olives-1.webp?v=b643e2f7cd)}
+.v-olives-2{background-image:url(../img/toppings/olives-2.webp?v=8de014b6f3)}
+.v-olives-3{background-image:url(../img/toppings/olives-3.webp?v=e35af1efb7)}
+.v-corn-0{background-image:url(../img/toppings/corn-0.webp?v=049046bafc)}
+.v-corn-1{background-image:url(../img/toppings/corn-1.webp?v=e2e93f2100)}
+.v-corn-2{background-image:url(../img/toppings/corn-2.webp?v=f68c18407b)}
+.v-corn-3{background-image:url(../img/toppings/corn-3.webp?v=26e60596e7)}
+.v-corn-4{background-image:url(../img/toppings/corn-4.webp?v=507a862bca)}
+.v-corn-5{background-image:url(../img/toppings/corn-5.webp?v=1a9681cad2)}
+.ly-cheese{background:url(../img/layer-cheese.webp?v=24d6135b98) center/100% 100% no-repeat}
+.pw{background:url(../img/layer-no-sauce.webp?v=964193d90b) center/100% 100% no-repeat}
+@supports (background-image:image-set(url("x.avif") type("image/avif"))){.ly-cheese{background-image:image-set(url(../img/layer-cheese.avif?v=e3acb9b8a5) type("image/avif"),url(../img/layer-cheese.webp?v=24d6135b98) type("image/webp"))}.pw{background-image:image-set(url(../img/layer-no-sauce.avif?v=9514f24c6b) type("image/avif"),url(../img/layer-no-sauce.webp?v=964193d90b) type("image/webp"))}}
+.no-avif .ly-cheese{background-image:url(../img/layer-cheese.webp?v=24d6135b98)}.no-avif .pw{background-image:url(../img/layer-no-sauce.webp?v=964193d90b)}
+/* with JavaScript the preview pizza is shown only once all builder images are in (builder.js adds .ready), so it never appears half-built.
+   Until then the plate glow (.pv:before) and a dough-coloured disc (as behind the hero photo) stand in for it. Without JavaScript: unchanged. */
+.js .bd:not(.ready) .pvw{opacity:0}
+.js .bd:not(.ready) .pv:after{content:"";position:absolute;top:6%;right:6%;bottom:6%;left:6%;border-radius:50%;background:radial-gradient(circle,#5a3320 0,#24150d 72%);opacity:.55;transform:scale(var(--k,1))}
+.js .bd.ready .pvw{transition:transform .55s cubic-bezier(.3,1.35,.5,1),opacity .45s ease}
+@media(prefers-reduced-motion:reduce){.js .bd.ready .pvw{transition:none}}
+/* loading (after 8 s) / error message over the placeholder (builder.js sets .pv-slow / .pv-error and the text) */
+.pv-msg{display:none;position:absolute;z-index:2;top:50%;left:14%;right:14%;transform:translateY(-50%);text-align:center;font:500 15px/1.5 var(--sans);color:#F5EBDD;text-shadow:0 1px 8px rgba(0,0,0,.6)}
+.bd.pv-slow .pv-msg,.bd.pv-error .pv-msg{display:block}
+@media(max-width:860px){.pv-msg{left:8%;right:8%;font-size:13px;line-height:1.4}}
+/* builder images are requested only when the builder is near the viewport (builder.js adds .near to .bd).
+   Without JavaScript (no .js class) they load as before, so the CSS-only builder is unaffected. */
+.js .bd:not(.near) .pvw,.js .bd:not(.near) .ch .ic[class*="v-"]{background-image:none}
 .bd:has(#bt-cheese:checked) .ly-cheese{display:block}
 .bd.t-cheese .ly-cheese{display:block}
 .bd:has(#bt-cheese:checked) .sel .c-cheese{display:inline-flex}

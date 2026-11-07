@@ -8,14 +8,27 @@
 <meta name="theme-color" content="#1d120b">
 <meta property="og:type" content="website"><meta property="og:site_name" content="פיצה מאנצ׳ חיפה | Pizza Manch Haifa"><meta property="og:title" content="פיצה מאנצ׳ חיפה | יש פיצה. ויש מאנצ׳."><meta property="og:description" content="הזמינו אונליין פיצה, פסטות וסלטים למשלוח ולאיסוף. HaYam Road 3, חיפה."><meta property="og:locale" content="he_IL"><meta property="og:locale:alternate" content="en_US"><meta name="twitter:card" content="summary">
 <!-- WHEN THE REAL DOMAIN EXISTS, add (do NOT use the ordering platform URL): <link rel="canonical" href="https://YOUR-DOMAIN/"> <meta property="og:url" content="https://YOUR-DOMAIN/"> <meta property="og:image" content="https://YOUR-DOMAIN/share-image.jpg"> and "url":"https://YOUR-DOMAIN/" in the JSON-LD below -->
- <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;900&family=Heebo:wght@400;500;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+<!-- PERFORMANCE: the hero photo is the LCP element: preload it (AVIF; the same file the <picture> and the CSS backgrounds use), plus the
+     three self-hosted fonts the first screen uses (Hebrew body + heading text, the Latin "MANCH" logo). -->
+<link rel="preload" as="image" type="image/avif" href="assets/img/pizza-1004.avif?v=42fe3c343a" fetchpriority="high">
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/heebo-hebrew.woff2?v=f1f7cfaef5" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/frank-ruhl-libre-hebrew.woff2?v=acdf9ed0a3" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/playfair-display-latin.woff2?v=5d2286941a" crossorigin>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Restaurant","name":"Pizza Manch Haifa","alternateName":"פיצה מאנצ׳ חיפה","servesCuisine":"Pizza","telephone":"+97248102091","address":{"@type":"PostalAddress","streetAddress":"HaYam Road 3","addressLocality":"Haifa","addressCountry":"IL"},"potentialAction":{"@type":"OrderAction","target":{"@type":"EntryPoint","urlTemplate":"https://order.bitetech.co.il"}}}</script>
-<script>(function(h){h.classList.add("js");try{if(!matchMedia("(prefers-reduced-motion:reduce)").matches){h.classList.add("mo");setTimeout(function(){if(!window.__mfx)h.classList.remove("mo")},5000)}}catch(e){}})(document.documentElement)</script>
+<script>(function(h){h.classList.add("js");try{if(!matchMedia("(prefers-reduced-motion:reduce)").matches){h.classList.add("mo");setTimeout(function(){if(!window.__mfx){h.classList.remove("mo");window.__mfxLate=1}},3000)}}catch(e){}})(document.documentElement)</script>
 <!-- builder.css is linked first on purpose: in the original single file the builder rules came before the
      mobile / accessibility / motion overrides that now live at the end of main.css. -->
-<link rel="stylesheet" href="assets/css/builder.css">
-<link rel="stylesheet" href="assets/css/main.css">
+<link rel="stylesheet" href="assets/css/builder.css?v=1db49f500f">
+<link rel="stylesheet" href="assets/css/main.css?v=5e883edee9">
+<!-- scripts: deferred = fetched during parsing, executed in this exact order once the document is parsed (as before at the end of <body>) -->
+<script defer src="assets/vendor/gsap/3.13.0/gsap.min.js?v=96c01b81f4"></script>
+<script defer src="assets/vendor/gsap/3.13.0/ScrollTrigger.min.js?v=308219390e"></script>
+<script defer src="assets/vendor/gsap/3.13.0/SplitText.min.js?v=5e519ea247"></script>
+<script defer src="assets/vendor/gsap/3.13.0/ScrollToPlugin.min.js?v=48b858c045"></script>
+<script defer src="assets/js/core.js?v=c332cb9488"></script>
+<script defer src="assets/js/builder-config.js?v=432e260296"></script>
+<script defer src="assets/js/builder.js?v=feb95f5750"></script>
+<script defer src="assets/js/motion.js?v=85ca7612a3"></script>
 <noscript><style>.rv{opacity:1;transform:none}.sig .im{transform:none}</style></noscript>
 </head>
 <body>
@@ -28,7 +41,7 @@
 <main id="main" tabindex="-1">
 <section class="hero" id="home">
  <div class="wm" aria-hidden="true">MANCH</div>
- <div class="pz" role="img" aria-label="פיצה שלמה על קרש הגשה מעץ" data-ae="A whole pizza on a wooden serving board"><i></i></div>
+ <div class="pz"><i><picture><source type="image/avif" srcset="assets/img/pizza-1004.avif?v=42fe3c343a 1004w" sizes="(max-width:860px) 128vw, min(72vw, 112vh)"><img src="assets/img/pizza.jpg?v=e00ea89e3f" srcset="assets/img/pizza.jpg?v=e00ea89e3f 1004w" sizes="(max-width:860px) 128vw, min(72vw, 112vh)" width="1004" height="1004" alt="פיצה שלמה על קרש הגשה מעץ" data-ae="A whole pizza on a wooden serving board" fetchpriority="high"></picture></i></div>
  <svg class="seal m" viewBox="0 0 160 160" role="img" aria-label="משלוח, איסוף והזמנה אונליין" data-ae="Delivery, pickup and online ordering"><path id="ring" d="M20 80A60 60 0 1 1 140 80A60 60 0 1 1 20 80" fill="none"/><circle cx="80" cy="80" r="78" fill="#F5EBDD"/><circle cx="80" cy="80" r="72" fill="none" stroke="#C93224" stroke-width="1.3"/><text direction="ltr" font-family="Heebo" font-weight="700" font-size="12" letter-spacing="3.4" fill="#171513"><textPath href="#ring">DELIVERY · PICKUP · ORDER ONLINE ·</textPath></text><text x="80" y="89" text-anchor="middle" font-family="Frank Ruhl Libre" font-weight="900" font-size="30" fill="#C93224">מאנצ׳</text></svg>
  <div class="ht"><div class="hti">
   <div class="eye" data-en="PIZZA MANCH · HAIFA">פיצה מאנצ׳ · חיפה</div>
@@ -51,7 +64,7 @@
  </div></section>
 
 <section class="mp" id="more"><div class="rv"><div class="eye" data-en="MORE THAN PIZZA">יותר מפיצה</div><h2 class="h2" data-en="Not just pizza.">לא רק פיצה.</h2></div><div class="row rv"><a href="https://order.bitetech.co.il" data-en="Pizza">פיצה</a><a href="https://order.bitetech.co.il" data-en="Pasta">פסטה</a><a href="https://order.bitetech.co.il" data-en="Salad">סלט</a></div></section>
-<section class="ex" id="ex"><div class="st"><img class="ph" src="assets/img/layer-by-layer.jpg" width="1000" height="667" alt="" decoding="async"><div class="t rv"><div class="eye" style="justify-content:center" data-en="LAYER BY LAYER">שכבה אחרי שכבה</div><h2 class="h2" data-en="Every bite starts here.">כל ביס מתחיל כאן.</h2></div></div></section>
+<section class="ex" id="ex"><div class="st"><picture><source type="image/avif" srcset="assets/img/layer-by-layer.avif?v=fcfc20d12e"><img class="ph" src="assets/img/layer-by-layer.jpg?v=6ba750098a" width="1000" height="667" alt="" loading="lazy" decoding="async"></picture><div class="t rv"><div class="eye" style="justify-content:center" data-en="LAYER BY LAYER">שכבה אחרי שכבה</div><h2 class="h2" data-en="Every bite starts here.">כל ביס מתחיל כאן.</h2></div></div></section>
 
 <!-- BUILDER:START (works without JavaScript: native radio/checkbox controls + CSS layers; the BUILDER ENGINE script adds the summary, re-placement and the cart) -->
 <section class="bd" id="build" aria-labelledby="bd-h">
@@ -99,13 +112,5 @@
 <footer><div><a class="logo" href="#home">MANCH</a>פיצה מאנצ׳ חיפה<br><span lang="en">Pizza Manch Haifa</span></div><div dir="ltr" style="text-align:start">HaYam Road 3, Haifa<br><a href="tel:+97248102091">04-810-2091</a></div><div><a href="https://order.bitetech.co.il" data-en="Order online">הזמנה אונליין</a><br><a href="https://www.google.com/maps/search/?api=1&query=HaYam+Road+3+Haifa" data-en="Directions">הוראות הגעה</a></div></footer>
 
 <div class="bar"><a class="btn" href="https://order.bitetech.co.il"><span data-en="Order delivery">הזמינו משלוח</span><svg viewBox="0 0 22 14" fill="none" stroke="#fff" stroke-width="2.2" aria-hidden="true"><path d="M21 7H1m6-6L1 7l6 6"/></svg></a><a class="call" href="tel:+97248102091" aria-label="חיוג 04-810-2091" data-ae="Call 04-810-2091"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F5EBDD" stroke-width="1.8" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></a></div>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollToPlugin.min.js"></script>
-<script src="assets/js/core.js"></script>
-<script src="assets/js/builder-config.js"></script>
-<script src="assets/js/builder.js"></script>
-<script src="assets/js/motion.js"></script>
 </body>
 </html>
