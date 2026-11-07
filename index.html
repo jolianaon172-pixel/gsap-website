@@ -238,7 +238,7 @@ footer .logo{display:block;color:var(--cream);margin-bottom:8px}footer a:hover{c
  .hero{display:flex;flex-direction:column;min-height:auto;padding-bottom:84px;background:radial-gradient(ellipse 85% 40% at 50% 34%,rgba(226,130,60,.38),transparent 72%),#1d120b}
  .wm,.strip,.seal:not(.m){display:none}.hero:after{display:none}
  .pz{position:relative;left:auto;top:auto;transform:none;align-self:center;flex:none;margin:30px 0 -15vw}
- .seal.m{display:block;position:absolute;left:66%;top:calc(30px + 98vw);bottom:auto;width:92px}
+ .seal.m{display:block;position:absolute;left:66%;top:calc(30px + 113vw - 100px);bottom:auto;width:92px}
  .ht{position:relative;transform:none;right:auto;top:auto;width:100%;padding:0 24px}
  .ht h1{font-size:clamp(58px,16.5vw,76px)}.ht p{font-size:19px;margin:14px 0 0}.cta{display:none}.eye{font-size:12px;margin-bottom:12px}
  .chips{display:flex;gap:8px;margin-top:16px;font-size:13px}.chips span{border:1px solid rgba(245,235,221,.3);border-radius:999px;padding:7px 12px}
@@ -261,6 +261,10 @@ main:focus{outline:none}body.nolock{overflow:hidden}
 .menu :focus-visible,.rev :focus-visible,.strip :focus-visible{outline-color:#171513}
 .btn:focus-visible{outline-color:#fff;outline-offset:4px;border-radius:999px}.ch button:focus-visible{outline-color:#E9863F}.mc:focus-visible{outline-offset:-6px}
 .logo,.lang,.bg{position:relative;z-index:31}
+/* LTR: CTA arrows point forward (flip the path, not the svg, so GSAP transforms on the svg are unaffected) */
+.en .btn svg path{transform:scaleX(-1);transform-box:fill-box;transform-origin:50% 50%}
+/* decorative arrow spans inside the menu card link label must not get the label's underline/spacing */
+.mc span span{margin:0;padding:0;border:0}
 .en .ht{text-align:right}.en .eye{justify-content:flex-end}.en .cta{justify-content:flex-end}.en .ht h1{font-size:clamp(46px,5.3vw,78px);line-height:1.02}
 @media(max-width:860px){.en .ht{text-align:left}.en .eye{justify-content:flex-start}.en .ht h1{font-size:clamp(46px,13vw,64px)}}
 .logo{display:inline-flex;align-items:center;min-height:44px}
@@ -314,25 +318,25 @@ footer a:not(.logo){display:inline-block;padding:9px 0}
 <section class="hero" id="home">
  <div class="wm" aria-hidden="true">MANCH</div>
  <div class="pz" role="img" aria-label="פיצה שלמה על קרש הגשה מעץ" data-ae="A whole pizza on a wooden serving board"><i></i></div>
- <svg class="seal" viewBox="0 0 160 160" role="img" aria-label="משלוח, איסוף והזמנה אונליין" data-ae="Delivery, pickup and online ordering"><path id="ring" d="M20 80A60 60 0 1 1 140 80A60 60 0 1 1 20 80" fill="none"/><circle cx="80" cy="80" r="78" fill="#F5EBDD"/><circle cx="80" cy="80" r="72" fill="none" stroke="#C93224" stroke-width="1.3"/><text direction="ltr" font-family="Heebo" font-weight="700" font-size="12" letter-spacing="3.4" fill="#171513"><textPath href="#ring">DELIVERY · PICKUP · ORDER ONLINE ·</textPath></text><text x="80" y="89" text-anchor="middle" font-family="Frank Ruhl Libre" font-weight="900" font-size="30" fill="#C93224">מאנצ׳</text></svg>
+ <svg class="seal m" viewBox="0 0 160 160" role="img" aria-label="משלוח, איסוף והזמנה אונליין" data-ae="Delivery, pickup and online ordering"><path id="ring" d="M20 80A60 60 0 1 1 140 80A60 60 0 1 1 20 80" fill="none"/><circle cx="80" cy="80" r="78" fill="#F5EBDD"/><circle cx="80" cy="80" r="72" fill="none" stroke="#C93224" stroke-width="1.3"/><text direction="ltr" font-family="Heebo" font-weight="700" font-size="12" letter-spacing="3.4" fill="#171513"><textPath href="#ring">DELIVERY · PICKUP · ORDER ONLINE ·</textPath></text><text x="80" y="89" text-anchor="middle" font-family="Frank Ruhl Libre" font-weight="900" font-size="30" fill="#C93224">מאנצ׳</text></svg>
  <div class="ht"><div class="hti">
   <div class="eye" data-en="PIZZA MANCH · HAIFA">פיצה מאנצ׳ · חיפה</div>
   <h1 data-en="There’s pizza.<br><b>And there’s Manch.</b>">יש פיצה.<br><b>ויש מאנצ׳.</b></h1>
   <p data-en="Your next bite starts here.">הביס הבא שלכם מתחיל כאן.</p>
-  <div class="cta"><a class="btn" href="https://order.bitetech.co.il"><span data-en="Order delivery">הזמינו משלוח</span><svg viewBox="0 0 22 14" fill="none" stroke="#fff" stroke-width="2"><path d="M21 7H1m6-6L1 7l6 6"/></svg></a><a class="l" href="#menu" data-en="View the menu">צפו בתפריט</a></div>
-  <div class="chips"><span><bdi dir="ltr">4.2 / 5</bdi> בגוגל</span><span dir="ltr">HaYam Road 3, Haifa</span></div>
+  <div class="cta"><a class="btn" href="https://order.bitetech.co.il"><span data-en="Order delivery">הזמינו משלוח</span><svg viewBox="0 0 22 14" fill="none" stroke="#fff" stroke-width="2" aria-hidden="true"><path d="M21 7H1m6-6L1 7l6 6"/></svg></a><a class="l" href="#menu" data-en="View the menu">צפו בתפריט</a></div>
+  <div class="chips"><span data-en='<bdi dir="ltr">4.2 / 5</bdi> on Google'><bdi dir="ltr">4.2 / 5</bdi> בגוגל</span><span dir="ltr">HaYam Road 3, Haifa</span></div>
  </div></div>
- <div class="strip"><div><small data-en="GOOGLE RATING">דירוג בגוגל</small><b><bdi dir="ltr">4.2 / 5</bdi></b></div><div><small data-en="ADDRESS">כתובת</small><b><bdi dir="ltr" lang="en">HaYam Road 3, Haifa</bdi></b></div><a href="tel:+97248102091"><small data-en="PHONE">טלפון</small><b><bdi dir="ltr">04-810-2091</bdi></b></a><a href="https://order.bitetech.co.il"><small data-en="ORDER ONLINE">הזמנה אונליין</small><b data-en="Delivery & pickup →">משלוח ואיסוף ←</b></a></div>
+ <div class="strip"><div><small data-en="GOOGLE RATING">דירוג בגוגל</small><b><bdi dir="ltr">4.2 / 5</bdi></b></div><div><small data-en="ADDRESS">כתובת</small><b><bdi dir="ltr" lang="en">HaYam Road 3, Haifa</bdi></b></div><a href="tel:+97248102091"><small data-en="PHONE">טלפון</small><b><bdi dir="ltr">04-810-2091</bdi></b></a><a href="https://order.bitetech.co.il"><small data-en="ORDER ONLINE">הזמנה אונליין</small><b data-en='Delivery & pickup <span aria-hidden="true">→</span>'>משלוח ואיסוף <span aria-hidden="true">←</span></b></a></div>
 </section>
 
 <section class="sig" id="signature"><div class="im" data-px=".08"></div><div class="t rv"><div class="eye" data-en="SIGNATURE">הפיצה שלנו</div><h2 class="h2" data-en="Pizza that leaves you wanting more.">פיצה שעושה חשק לעוד.</h2><p data-en="One look. One bite. One more.">מבט אחד. ביס אחד. עוד אחד.</p></div></section>
 
 <section class="menu" id="menu"><div class="top rv"><div><div class="eye" data-en="THE MENU">התפריט</div><h2 class="h2" data-en="Pizza, and more.">פיצה, ועוד.</h2></div><p data-en="The full dishes and prices are on our ordering platform.">כל המנות והמחירים המלאים נמצאים בפלטפורמת ההזמנות שלנו.</p></div>
  <div class="mg">
-  <a class="mc rv" href="https://order.bitetech.co.il"><div class="im"></div><b class="n" aria-hidden="true">01</b><h3 data-en="Pizzas">פיצות</h3><span data-en="Order →">להזמנה ←</span></a>
-  <a class="mc rv" href="https://order.bitetech.co.il"><div class="im"></div><b class="n" aria-hidden="true">02</b><h3 data-en="Pastas">פסטות</h3><span data-en="Order →">להזמנה ←</span></a>
-  <a class="mc rv" href="https://order.bitetech.co.il"><div class="im"></div><b class="n" aria-hidden="true">03</b><h3 data-en="Salads">סלטים</h3><span data-en="Order →">להזמנה ←</span></a>
-  <a class="mc rv" href="https://order.bitetech.co.il"><div class="im"></div><b class="n" aria-hidden="true">04</b><h3 data-en="Sides">תוספות</h3><span data-en="Order →">להזמנה ←</span></a>
+  <a class="mc rv" href="https://order.bitetech.co.il"><div class="im"></div><b class="n" aria-hidden="true">01</b><h3 data-en="Pizzas">פיצות</h3><span data-en='Order <span aria-hidden="true">→</span>'>להזמנה <span aria-hidden="true">←</span></span></a>
+  <a class="mc rv" href="https://order.bitetech.co.il"><div class="im"></div><b class="n" aria-hidden="true">02</b><h3 data-en="Pastas">פסטות</h3><span data-en='Order <span aria-hidden="true">→</span>'>להזמנה <span aria-hidden="true">←</span></span></a>
+  <a class="mc rv" href="https://order.bitetech.co.il"><div class="im"></div><b class="n" aria-hidden="true">03</b><h3 data-en="Salads">סלטים</h3><span data-en='Order <span aria-hidden="true">→</span>'>להזמנה <span aria-hidden="true">←</span></span></a>
+  <a class="mc rv" href="https://order.bitetech.co.il"><div class="im"></div><b class="n" aria-hidden="true">04</b><h3 data-en="Sides">תוספות</h3><span data-en='Order <span aria-hidden="true">→</span>'>להזמנה <span aria-hidden="true">←</span></span></a>
  </div></section>
 
 <section class="mp" id="more"><div class="rv"><div class="eye" data-en="MORE THAN PIZZA">יותר מפיצה</div><h2 class="h2" data-en="Not just pizza.">לא רק פיצה.</h2></div><div class="row rv"><a href="https://order.bitetech.co.il" data-en="Pizza">פיצה</a><a href="https://order.bitetech.co.il" data-en="Pasta">פסטה</a><a href="https://order.bitetech.co.il" data-en="Salad">סלט</a></div></section>
@@ -376,21 +380,21 @@ footer a:not(.logo){display:inline-block;padding:9px 0}
 
 <section class="why" id="why"><div class="rv"><div class="eye" data-en="WHY MANCH?">למה מאנצ׳?</div><h2 class="h2" data-en="We don’t compromise on the bite.">לא מתפשרים<br>על הביס.</h2><p data-en="Pizza Manch Haifa: pizza, pasta and salads for delivery and pickup. It all starts with one good bite.">פיצה מאנצ׳ חיפה: פיצה, פסטות וסלטים, למשלוח ולאיסוף עצמי. הכול מתחיל בביס טוב אחד.</p><ul><li data-en="Delivery">משלוח</li><li data-en="Pickup">איסוף עצמי</li><li data-en="Order online">הזמנה אונליין</li></ul></div></section>
 
-<section class="rev"><div class="big rv" dir="ltr">4.2<small>/5</small></div><div class="rv"><div class="eye" style="color:#9C2A1D" data-en="GOOGLE RATING">דירוג בגוגל</div><p data-en="Rated on Google by our customers.">הדירוג של הלקוחות שלנו בגוגל.</p><a href="https://www.google.com/maps/search/?api=1&query=Pizza+Manch+Haifa" data-en="Read reviews on Google →">לביקורות בגוגל ←</a></div></section>
+<section class="rev"><div class="big rv" dir="ltr">4.2<small>/5</small></div><div class="rv"><div class="eye" style="color:#9C2A1D" data-en="GOOGLE RATING">דירוג בגוגל</div><p data-en="Rated on Google by our customers.">הדירוג של הלקוחות שלנו בגוגל.</p><a href="https://www.google.com/maps/search/?api=1&query=Pizza+Manch+Haifa" data-en='Read reviews on Google <span aria-hidden="true">→</span>'>לביקורות בגוגל <span aria-hidden="true">←</span></a></div></section>
 
-<section class="fin" id="contact"><div class="im" data-px=".05"></div><div class="t rv"><h2 class="h2" style="font-size:clamp(52px,8vw,120px)" data-en="Craving Manch?">בא לכם מאנצ׳?</h2><p data-en="Your next pizza is waiting.">הפיצה הבאה שלכם מחכה לכם.</p><div class="row"><a class="btn" href="https://order.bitetech.co.il"><span data-en="Order now">הזמינו עכשיו</span><svg viewBox="0 0 22 14" fill="none" stroke="#fff" stroke-width="2"><path d="M21 7H1m6-6L1 7l6 6"/></svg></a><a class="btn o" href="tel:+97248102091" dir="ltr">04-810-2091</a></div></div></section>
+<section class="fin" id="contact"><div class="im" data-px=".05"></div><div class="t rv"><h2 class="h2" style="font-size:clamp(52px,8vw,120px)" data-en="Craving Manch?">בא לכם מאנצ׳?</h2><p data-en="Your next pizza is waiting.">הפיצה הבאה שלכם מחכה לכם.</p><div class="row"><a class="btn" href="https://order.bitetech.co.il"><span data-en="Order now">הזמינו עכשיו</span><svg viewBox="0 0 22 14" fill="none" stroke="#fff" stroke-width="2" aria-hidden="true"><path d="M21 7H1m6-6L1 7l6 6"/></svg></a><a class="btn o" href="tel:+97248102091" dir="ltr">04-810-2091</a></div></div></section>
 
 </main>
 <footer><div><a class="logo" href="#home">MANCH</a>פיצה מאנצ׳ חיפה<br><span lang="en">Pizza Manch Haifa</span></div><div dir="ltr" style="text-align:start">HaYam Road 3, Haifa<br><a href="tel:+97248102091">04-810-2091</a></div><div><a href="https://order.bitetech.co.il" data-en="Order online">הזמנה אונליין</a><br><a href="https://www.google.com/maps/search/?api=1&query=HaYam+Road+3+Haifa" data-en="Directions">הוראות הגעה</a></div></footer>
 
-<div class="bar"><a class="btn" href="https://order.bitetech.co.il"><span data-en="Order delivery">הזמינו משלוח</span><svg viewBox="0 0 22 14" fill="none" stroke="#fff" stroke-width="2.2"><path d="M21 7H1m6-6L1 7l6 6"/></svg></a><a class="call" href="tel:+97248102091" aria-label="חיוג 04-810-2091" data-ae="Call 04-810-2091"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F5EBDD" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></a></div>
+<div class="bar"><a class="btn" href="https://order.bitetech.co.il"><span data-en="Order delivery">הזמינו משלוח</span><svg viewBox="0 0 22 14" fill="none" stroke="#fff" stroke-width="2.2" aria-hidden="true"><path d="M21 7H1m6-6L1 7l6 6"/></svg></a><a class="call" href="tel:+97248102091" aria-label="חיוג 04-810-2091" data-ae="Call 04-810-2091"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F5EBDD" stroke-width="1.8" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></a></div>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollToPlugin.min.js"></script>
 <script>
 (function(){var d=document,$=function(s){return[].slice.call(d.querySelectorAll(s))},rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
-var gs=!!(window.gsap&&window.ScrollTrigger);if(!gs){var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.15});$('.rv,.sig').forEach(function(e){io.observe(e)});if(!rm){d.documentElement.classList.add('anim');setTimeout(function(){$('.rv').forEach(function(e){e.classList.add('in')})},2500)}}
+var gs=!!(window.gsap&&window.ScrollTrigger);if(!gs){if('IntersectionObserver' in window){var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.15});$('.rv,.sig').forEach(function(e){io.observe(e)})}else $('.rv,.sig').forEach(function(e){e.classList.add('in')});if(!rm){d.documentElement.classList.add('anim');setTimeout(function(){$('.rv').forEach(function(e){e.classList.add('in')})},2500)}}
 var nav=d.getElementById('nav'),px=$('[data-px]');function sc(){nav.classList.toggle('s',scrollY>40);}addEventListener('scroll',sc,{passive:true});sc();
 var lz=$('img[data-src]');if('IntersectionObserver' in window){var lo=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.src=x.target.dataset.src;lo.unobserve(x.target)}})},{rootMargin:'800px'});lz.forEach(function(e){lo.observe(e)})}else lz.forEach(function(e){e.src=e.dataset.src});
 var lk=d.getElementById('lk'),bg=d.getElementById('bg'),lb=d.getElementById('lang'),h=d.documentElement,en=false,inertEls=$('main,footer,.bar,.skip');
@@ -399,7 +403,8 @@ function menu(open){lk.classList.toggle('o',open);bg.setAttribute('aria-expanded
 bg.onclick=function(){var o=!lk.classList.contains('o');menu(o);if(o)lk.querySelector('a').focus()};
 lk.addEventListener('click',function(e){if(e.target.closest('a'))menu(false)});
 addEventListener('keydown',function(e){if(!lk.classList.contains('o'))return;if(e.key=='Escape'){menu(false);bg.focus();return}if(e.key=='Tab'){var f=[d.querySelector('.logo')].concat($('#lk a'),[lb,bg]);if(!e.shiftKey&&d.activeElement==f[f.length-1]){e.preventDefault();f[0].focus()}else if(e.shiftKey&&d.activeElement==f[0]){e.preventDefault();f[f.length-1].focus()}}});
-matchMedia('(min-width:861px)').addEventListener('change',function(m){if(m.matches&&lk.classList.contains('o'))menu(false)});
+/* older iOS Safari (<14) has no MediaQueryList.addEventListener: fall back to addListener */
+var mqDesk=matchMedia('(min-width:861px)'),onDesk=function(m){if(m.matches&&lk.classList.contains('o'))menu(false)};if(mqDesk.addEventListener)mqDesk.addEventListener('change',onDesk);else if(mqDesk.addListener)mqDesk.addListener(onDesk);
 d.getElementById('skip').addEventListener('click',function(){setTimeout(function(){d.getElementById('main').focus()},0)});
 var els=$('[data-en]'),aes=$('[data-ae]'),mdesc=d.getElementById('mdesc');els.forEach(function(e){e.setAttribute('data-he',e.innerHTML)});aes.forEach(function(e){var a=e.hasAttribute('alt')?'alt':'aria-label';e.setAttribute('data-ah',e.getAttribute(a))});
 function setLang(v){en=v;h.lang=en?'en':'he';h.dir=en?'ltr':'rtl';h.classList.toggle('en',en);els.forEach(function(e){e.innerHTML=e.getAttribute(en?'data-en':'data-he')});aes.forEach(function(e){e.setAttribute(e.hasAttribute('alt')?'alt':'aria-label',en?e.getAttribute('data-ae'):e.getAttribute('data-ah'))});var T=TT[en?'en':'he'];d.title=T.t;mdesc.setAttribute('content',T.d);lb.textContent=en?'עברית':'EN';lb.lang=en?'he':'en';lb.setAttribute('aria-label',en?'החלפה לעברית':'Switch to English');bg.setAttribute('aria-label',T[lk.classList.contains('o')?'c':'o']);dispatchEvent(new Event('manchlang'))}
@@ -466,11 +471,38 @@ function read(){var s={size:null,sauce:null,top:{}};C.sizes.forEach(function(x){
  C.toppings.forEach(function(t){if(inp('bt-'+t.id).checked)s.top[t.id]=true});s.size=s.size||'m';s.sauce=s.sauce||'tomato';return s}
 function write(s){C.sizes.forEach(function(x){inp('bs-'+x.id).checked=s.size==x.id});C.sauces.forEach(function(x){inp('bsc-'+x.id).checked=s.sauce==x.id});C.toppings.forEach(function(t){inp('bt-'+t.id).checked=!!s.top[t.id]})}
 function selected(s){return C.toppings.filter(function(t){return s.top[t.id]}).map(function(t){return t.id})}
-try{cart=JSON.parse(localStorage.getItem(KEY)||'[]').filter(function(i){return i&&i.size&&i.tops})}catch(e){cart=[]}
+/* ---------- saved-cart validation: everything read from storage is untrusted ---------- */
+var QMAX=20,ID_RE=/^[a-z0-9]{1,40}$/,THUMB_RE=/^data:image\/jpeg;base64,[A-Za-z0-9+\/]+={0,2}$/;
+function known(list,id){return typeof id=='string'&&!!byId(list,id)}
+function okThumb(t){return typeof t=='string'&&t.length<400000&&THUMB_RE.test(t)?t:''}
+function inRange(v,lo,hi){return typeof v=='number'&&isFinite(v)&&v>=lo&&v<=hi}
+/* stored piece layouts end up in inline styles, so every field must be a number in range; any doubt -> null (re-placed) */
+function cleanPieces(ps){if(!ps||typeof ps!='object'||Array.isArray(ps))return null;var out={};
+ for(var k=0;k<tops.length;k++){var t=tops[k];if(t.layer)continue;var a=ps[t.id];if(!Array.isArray(a)||a.length>200)return null;out[t.id]=[];
+  for(var j=0;j<a.length;j++){var p=a[j];if(!p||typeof p!='object')return null;
+   if(!inRange(p.x,0,1)||!inRange(p.y,0,1)||!inRange(p.rot,-720,720)||!inRange(p.sc,.1,3)||!inRange(p.v,0,(NV[t.id]||1)-1)||!inRange(p.d,0,2))return null;
+   out[t.id].push({x:p.x,y:p.y,rot:Math.round(p.rot),sc:p.sc,v:Math.floor(p.v),f:p.f?1:0,d:p.d})}}
+ return out}
+/* returns a safe copy of one saved pizza, or null if it cannot be represented with the current menu config.
+   Unknown size or sauce -> the item is dropped. Unknown toppings -> removed, and the thumbnail is regenerated. */
+function cleanItem(o,seen){if(!o||typeof o!='object'||Array.isArray(o))return null;
+ if(!known(C.sizes,o.size)||!known(C.sauces,o.sauce)||!Array.isArray(o.tops))return null;
+ var want={},lost=false;o.tops.forEach(function(t){if(known(C.toppings,t))want[t]=true;else lost=true});
+ var tp=C.toppings.filter(function(t){return want[t.id]}).map(function(t){return t.id}),top={};tp.forEach(function(t){top[t]=true});
+ var q=Math.floor(Number(o.qty));q=isFinite(q)?Math.min(QMAX,Math.max(1,q)):1;
+ var id=typeof o.id=='string'&&ID_RE.test(o.id)&&!seen[o.id]?o.id:uid();seen[id]=true;
+ return {size:o.size,sauce:o.sauce,tops:tp,top:top,pieces:cleanPieces(o.pieces),qty:q,thumb:lost?'':okThumb(o.thumb),id:id}}
+function parseCart(raw){var a;try{a=JSON.parse(raw||'[]')}catch(e){return []}if(!Array.isArray(a))return [];
+ var seen={},out=[];a.forEach(function(o){var c=cleanItem(o,seen);c&&out.push(c)});return out}
+function readStore(){try{return localStorage.getItem(KEY)}catch(e){return null}}
+var rawCart=readStore();cart=parseCart(rawCart);
 function save(){try{localStorage.setItem(KEY,JSON.stringify(cart))}catch(e){}}
+/* write the cleaned cart back so invalid data does not linger */
+if(rawCart!=null&&JSON.stringify(cart)!==rawCart)save();
 
 /* ---------- pieces ---------- */
-function placeAll(sd){var placed=[];pieces={};tops.forEach(function(t){if(t.layer)return;pieces[t.id]=C.place(t,NV[t.id]||1,rng(sd+t.z*7919),placed,C.radius);placed.push({w:t.w,ps:pieces[t.id]})})}
+function makePieces(sd){var placed=[],ps={};tops.forEach(function(t){if(t.layer)return;ps[t.id]=C.place(t,NV[t.id]||1,rng(sd+t.z*7919),placed,C.radius);placed.push({w:t.w,ps:ps[t.id]})});return ps}
+function placeAll(sd){pieces=makePieces(sd)}
 function f2(n){return +n.toFixed(2)}
 function draw(t){var ly=LY[t.id],w=t.w*100,html='';(pieces[t.id]||[]).forEach(function(p){var s=w*p.sc;
  html+='<i class="pc" style="left:'+f2(p.x*100)+'%;top:'+f2(p.y*100)+'%;width:'+f2(s)+'%;height:'+f2(s)+'%;margin:'+f2(-s/2)+'% 0 0 '+f2(-s/2)+'%;--d:'+p.d+'s"><b class="v-'+t.id+'-'+p.v+'" style="--r:'+p.rot+'deg'+(p.f?';--f:-1':'')+'"></b></i>'});ly.innerHTML=html}
@@ -479,7 +511,7 @@ function drawAll(){tops.forEach(function(t){if(!t.layer)draw(t)})}
 /* ---------- live state → classes, summary ---------- */
 var CLS=[];C.toppings.forEach(function(t){CLS.push('t-'+t.id)});C.sizes.forEach(function(s){CLS.push('s-'+s.id)});CLS.push('sc-none','any-top');
 function priceOf(it){if(!C.prices)return null;var p=(C.prices.size||{})[it.size]||0;it.tops.forEach(function(t){p+=(C.prices.topping||{})[t]||0});p+=(C.prices.sauce||{})[it.sauce]||0;return p}
-function desc(it){var l=L(),tp=it.tops.length?it.tops.map(function(id){return byId(C.toppings,id)[l]}).join(', '):T().none;return byId(C.sauces,it.sauce)[l]+' · '+tp}
+function desc(it){var l=L(),ts=it.tops.filter(function(id){return byId(C.toppings,id)}),tp=ts.length?ts.map(function(id){return byId(C.toppings,id)[l]}).join(', '):T().none,sc=byId(C.sauces,it.sauce);return (sc?sc[l]:'')+' · '+tp}
 function sync(){var s=read(),l=L(),S=byId(C.sizes,s.size),sel=selected(s);
  CLS.forEach(function(c){bd.classList.remove(c)});sel.forEach(function(id){bd.classList.add('t-'+id)});bd.classList.add('s-'+s.size);if(s.sauce=='none')bd.classList.add('sc-none');if(sel.length)bd.classList.add('any-top');
  var it={size:s.size,sauce:s.sauce,tops:sel},pr=priceOf(it);
@@ -511,31 +543,42 @@ $('badd').addEventListener('click',function(){var s=read(),it={size:s.size,sauce
  var i=-1;if(editing)for(var j=0;j<cart.length;j++)if(cart[j].id==editing)i=j;
  if(i>-1){it.id=editing;it.qty=cart[i].qty;cart[i]=it;msg=T().updated}else{it.id=uid();cart.push(it);msg=T().added}
  editing=null;save();renderCart(it.id);fly(it);toast(msg);sync()});
-function fly(it){if(!G||!motion()||!it.thumb)return;var pv=$('pv').getBoundingClientRect(),li=d.querySelector('.ci[data-id="'+it.id+'"] img');if(!li)return;var to=li.getBoundingClientRect();
+function fly(it){if(!G||!motion()||!it.thumb)return;var pv=$('pv').getBoundingClientRect(),row=rowOf(it.id),li=row&&row.querySelector('img');if(!li)return;var to=li.getBoundingClientRect();
  if(to.bottom<0||to.top>innerHeight)return;var f=new Image();f.src=it.thumb;f.className='fly';f.alt='';var s=Math.min(pv.width,pv.height);
  f.style.cssText='left:'+pv.left+'px;top:'+pv.top+'px;width:'+s+'px;height:'+s+'px';d.body.appendChild(f);G.set(li,{autoAlpha:0});
  G.to(f,{left:to.left,top:to.top,width:to.width,height:to.height,duration:.8,ease:'expo.inOut',onComplete:function(){f.parentNode&&f.parentNode.removeChild(f);G.set(li,{autoAlpha:1})}})}
-function renderCart(flash){var l=L(),n=0,ul=$('clist'),out='';
+/* the cart is built with DOM nodes + textContent: no stored value is ever parsed as HTML */
+function el(tag,cls,txt){var e=d.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
+function act(a,label,txt,cls,off){var b=el('button',cls,txt);b.type='button';b.setAttribute('data-a',a);if(label)b.setAttribute('aria-label',label);if(off)b.disabled=true;return b}
+function rowOf(id){var r=$('clist').children;for(var i=0;i<r.length;i++)if(r[i].getAttribute('data-id')===id)return r[i];return null}
+function renderCart(flash){var l=L(),n=0,ul=$('clist'),frag=d.createDocumentFragment();
+ if(editing&&find(editing)<0)editing=null;
  cart.forEach(function(it){n+=it.qty;var S=byId(C.sizes,it.size)||C.sizes[0],nm=T().sizeName(S[l]),pr=priceOf(it);
-  out+='<li class="ci'+(it.id==editing?' ed':'')+'" data-id="'+it.id+'"><img src="'+(it.thumb||'')+'" alt=""><div><b>'+nm+'</b><p>'+desc(it)+(pr!=null?' · ₪'+pr*it.qty:'')+'</p></div>'+
-  '<div class="ca"><span class="qty"><button type="button" data-a="dec" aria-label="'+T().dec+': '+nm+'"'+(it.qty<2?' disabled':'')+'>−</button><output aria-live="polite">'+it.qty+'</output><button type="button" data-a="inc" aria-label="'+T().inc+': '+nm+'"'+(it.qty>19?' disabled':'')+'>+</button></span>'+
-  '<button class="tb" type="button" data-a="edit">'+T().edit+'</button><button class="tb" type="button" data-a="del" aria-label="'+T().rmItem+': '+nm+'">'+T().rmItem+'</button></div></li>'});
- ul.innerHTML=out;$('cart').classList.toggle('empty',!cart.length);$('ccount').textContent=cart.length?T().count(n):'';
+  var li=el('li','ci'+(it.id==editing?' ed':''));li.setAttribute('data-id',it.id);
+  var im=el('img');im.setAttribute('src',okThumb(it.thumb));im.setAttribute('alt','');li.appendChild(im);
+  var tx=el('div');tx.appendChild(el('b',null,nm));tx.appendChild(el('p',null,desc(it)+(pr!=null?' · ₪'+pr*it.qty:'')));li.appendChild(tx);
+  var ca=el('div','ca'),qt=el('span','qty'),o=el('output',null,String(it.qty));o.setAttribute('aria-live','polite');
+  qt.appendChild(act('dec',T().dec+': '+nm,'−',null,it.qty<2));qt.appendChild(o);qt.appendChild(act('inc',T().inc+': '+nm,'+',null,it.qty>=QMAX));
+  ca.appendChild(qt);ca.appendChild(act('edit',null,T().edit,'tb'));ca.appendChild(act('del',T().rmItem+': '+nm,T().rmItem,'tb'));li.appendChild(ca);
+  frag.appendChild(li)});
+ ul.textContent='';ul.appendChild(frag);$('cart').classList.toggle('empty',!cart.length);$('ccount').textContent=cart.length?T().count(n):'';
  var bySize={};cart.forEach(function(it){bySize[it.size]=(bySize[it.size]||0)+it.qty});
- var dl=C.sizes.filter(function(s){return bySize[s.id]}).map(function(s){return '<dt>'+T().sizeName(s[l])+'</dt><dd>×'+bySize[s.id]+'</dd>'}).join('');
+ var dl=$('csum');dl.textContent='';
+ function pair(dt,dd,cls){dl.appendChild(el('dt',cls,dt));var v=el('dd',cls);if(typeof dd=='string')v.textContent=dd;else v.appendChild(dd);dl.appendChild(v)}
+ C.sizes.forEach(function(s){if(bySize[s.id])pair(T().sizeName(s[l]),'×'+bySize[s.id])});
  var tot=0;cart.forEach(function(it){var p=priceOf(it);tot=(p==null||tot==null)?null:tot+p*it.qty});
- dl+='<dt class="tot">'+T().pizzas+'</dt><dd class="tot">'+n+'</dd><dt>'+T().total+'</dt><dd>'+(C.prices&&tot!=null?'₪'+tot:'<span style="font-weight:500">'+T().priceNote+'</span>')+'</dd>';
- $('csum').innerHTML=dl;
- if(flash&&G&&motion()){var li=ul.querySelector('[data-id="'+flash+'"]');li&&G.from(li,{backgroundColor:'#4a3524',duration:1.2,ease:'power2.out',clearProps:'backgroundColor'})}}
+ pair(T().pizzas,String(n),'tot');
+ var tv;if(C.prices&&tot!=null)tv='₪'+tot;else{tv=el('span',null,T().priceNote);tv.style.fontWeight='500'}pair(T().total,tv);
+ if(flash&&G&&motion()){var li=rowOf(flash);li&&G.from(li,{backgroundColor:'#4a3524',duration:1.2,ease:'power2.out',clearProps:'backgroundColor'})}}
 function find(id){for(var i=0;i<cart.length;i++)if(cart[i].id==id)return i;return -1}
 $('clist').addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('button');if(!b)return;var li=b.closest('.ci'),id=li.getAttribute('data-id'),i=find(id),it=cart[i];if(!it)return;var a=b.getAttribute('data-a');
- if(a=='inc'&&it.qty<20)it.qty++;else if(a=='dec'&&it.qty>1)it.qty--;
+ if(a=='inc'&&it.qty<QMAX)it.qty++;else if(a=='dec'&&it.qty>1)it.qty--;
  else if(a=='del'){var go=function(){var k=find(id);if(k>-1)cart.splice(k,1);if(editing==id)editing=null;save();renderCart();sync();toast(T().removed);var nx=$('clist').querySelector('.ci button')||$('badd');nx.focus()};
   if(G&&motion())G.to(li,{autoAlpha:0,height:0,paddingTop:0,paddingBottom:0,marginTop:-12,duration:.3,ease:'power2.in',onComplete:go});else go();return}
  else if(a=='edit'){editing=id;var s={size:it.size,sauce:it.sauce,top:it.top||{}};if(!it.top)it.tops.forEach(function(t){s.top[t]=true});
   write(s);if(it.pieces){pieces=clone(it.pieces)}else placeAll(seed());drawAll();sync();renderCart();toast(T().editing);
   var pv=$('pv').getBoundingClientRect();if(pv.bottom<0||pv.top>innerHeight)$('build').scrollIntoView({behavior:motion()?'smooth':'auto',block:'start'});var fi=d.querySelector('#bctl input:checked');fi&&fi.focus({preventScroll:true});return}
- save();renderCart();var nb=$('clist').querySelector('[data-id="'+id+'"] [data-a="'+a+'"]');if(!nb||nb.disabled)nb=$('clist').querySelector('[data-id="'+id+'"] [data-a]:not(:disabled)');nb&&nb.focus()});
+ save();renderCart();var nr=rowOf(id),nb=nr&&nr.querySelector('[data-a="'+a+'"]');if(!nb||nb.disabled)nb=nr&&nr.querySelector('[data-a]:not(:disabled)');nb&&nb.focus()});
 function orderText(){var l=L(),lines=[T().orderTitle+':'];cart.forEach(function(it){lines.push(it.qty+'× '+T().sizeName(byId(C.sizes,it.size)[l])+' – '+desc(it))});var n=0;cart.forEach(function(it){n+=it.qty});lines.push(T().pizzas+': '+n);return lines.join('\n')}
 $('bcopy').addEventListener('click',function(){var t=orderText(),ok=function(){toast(T().copied)},bad=function(){var ta=d.createElement('textarea');ta.value=t;ta.setAttribute('readonly','');ta.style.cssText='position:fixed;opacity:0';d.body.appendChild(ta);ta.select();var r=false;try{r=d.execCommand('copy')}catch(x){}d.body.removeChild(ta);toast(r?T().copied:T().copyFail)};
  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(ok,bad);else bad()});
@@ -544,8 +587,19 @@ $('bclear').addEventListener('click',function(){cart=[];editing=null;save();rend
 /* ---------- init ---------- */
 if('IntersectionObserver' in window)new IntersectionObserver(function(e){d.body.classList.toggle('in-build',e[0].isIntersecting)},{rootMargin:'-20% 0px -20% 0px'}).observe(d.querySelector('.bd-main'));
 addEventListener('manchlang',function(){sync();renderCart()});
-addEventListener('storage',function(e){if(e.key==KEY){try{cart=JSON.parse(e.newValue||'[]')}catch(x){cart=[]}renderCart()}});
-placeAll(seed());drawAll();sync();renderCart();
+/* saved pizzas whose thumbnail was missing/invalid or whose toppings changed get a fresh thumbnail.
+   Used on load and for carts arriving from another tab. Validation has already emptied any unsafe thumb. */
+var allImg=[IMG.base,IMG.white,IMG.cheese];tops.forEach(function(t){if(!t.layer)allImg=allImg.concat(IMG[t.id])});
+function imgsReady(){return allImg.every(function(i){return i.complete&&i.naturalWidth})}
+function fillThumbs(){var ch=false;cart.forEach(function(it){if(it.thumb)return;if(!it.pieces)it.pieces=makePieces(seed());var t=thumb({size:it.size,sauce:it.sauce,top:it.top},it.pieces);if(t){it.thumb=t;ch=true}});if(ch)save();return ch}
+/* images ready: fill now (synchronously, before the caller renders); otherwise fill + re-render once they have decoded */
+function ensureThumbs(){if(!cart.some(function(it){return !it.thumb}))return;
+ if(imgsReady()){fillThumbs();return}
+ if(window.Promise)Promise.all(allImg.map(function(i){return i.complete&&i.naturalWidth?0:new Promise(function(r){i.addEventListener('load',r);i.addEventListener('error',r)})})).then(function(){try{if(fillThumbs())renderCart()}catch(x){}})}
+/* another tab changed the cart: same validation as the initial load; key null = storage was cleared */
+addEventListener('storage',function(e){if(e.key!==KEY&&e.key!==null)return;
+ try{cart=parseCart(readStore());if(editing&&find(editing)<0)editing=null;ensureThumbs();renderCart();sync()}catch(x){window.console&&console.error('Could not apply the cart from another tab.',x)}});
+placeAll(seed());drawAll();sync();ensureThumbs();renderCart();
 window.MANCH_BUILDER={state:read,pieces:function(){return pieces},cart:function(){return cart},newPizza:newPizza,config:C};
 }catch(err){h.classList.remove('js');window.console&&console.error('Pizza builder enhancement failed; the basic builder still works.',err)}
 })();
@@ -729,7 +783,7 @@ mm.add({desk:'(min-width:861px)',mob:'(max-width:860px)',motion:'(prefers-reduce
  /* magnetic buttons (precise pointers only) */
  if(c.fine)$('.btn').forEach(function(b){var xs=G.quickTo(b,'x',{duration:.5,ease:'power3'}),ys=G.quickTo(b,'y',{duration:.5,ease:'power3'}),ar=q('svg',b);
   lis(b,'pointermove',function(e){var r=b.getBoundingClientRect();xs((e.clientX-r.left-r.width/2)*.28);ys((e.clientY-r.top-r.height/2)*.38)});
-  lis(b,'pointerenter',function(){ar&&G.to(ar,{x:-6,duration:.5,ease:'expo.out',overwrite:'auto'})});
+  lis(b,'pointerenter',function(){ar&&G.to(ar,{x:h.dir=='ltr'?6:-6,duration:.5,ease:'expo.out',overwrite:'auto'})});
   lis(b,'pointerleave',function(){G.to(b,{x:0,y:0,duration:1,ease:'elastic.out(1,.4)',overwrite:true});ar&&G.to(ar,{x:0,duration:.6,ease:'expo.out',overwrite:'auto'})});
   off.push(function(){G.set([b,ar],{clearProps:'transform'})})});
 
