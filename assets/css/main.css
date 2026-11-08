@@ -80,7 +80,7 @@ nav.s{padding-block:16px}nav.s:before{content:"";position:absolute;inset:0;z-ind
 .menu .top p{max-width:360px;font-size:18px;line-height:1.55;color:#4a3f35}
 .mg{display:grid;grid-template-columns:1.35fr 1fr 1fr;grid-template-rows:300px 300px;gap:18px}
 .mc{position:relative;overflow:hidden;border-radius:6px;padding:28px;display:flex;flex-direction:column;justify-content:flex-end;color:var(--cream);background:#2a1a10}
-.mc:first-child{grid-row:span 2}
+.mc:first-child{grid-row:span 2}.mc:last-child{grid-column:span 2}
 .mc:before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(20,12,7,.9),rgba(20,12,7,.5) 40%,rgba(20,12,7,.05) 75%)}
 .mc .im{position:absolute;inset:0;transition:transform 1.2s}.mc:hover .im{transform:scale(1.06)}
 .mc:first-child .im{background:var(--pizza) 40% 45%/150%}
@@ -99,8 +99,12 @@ nav.s{padding-block:16px}nav.s:before{content:"";position:absolute;inset:0;z-ind
 /* MORE THAN PIZZA */
 .mp{background:linear-gradient(180deg,#1d120b,#2c1a0f);padding:clamp(72px,9vw,130px) max(24px,7vw)}
 .mp .row{display:flex;justify-content:space-between;gap:24px;margin-top:48px;border-top:1px solid rgba(245,235,221,.2)}
-.mp .row a{font:900 clamp(60px,12vw,190px)/1.1 var(--serif);color:transparent;-webkit-text-stroke:1.2px rgba(245,235,221,.55);padding-top:14px;transition:color .4s,-webkit-text-stroke-color .4s}
+.mp .row a{font:900 clamp(60px,12vw,190px)/1.1 var(--serif);color:rgba(245,235,221,.07);-webkit-text-stroke:1.6px rgba(245,235,221,.88);padding-top:14px;transition:color .4s,-webkit-text-stroke-color .4s}
 .mp .row a:hover{color:var(--or);-webkit-text-stroke-color:var(--or)}
+/* phones: the menu-card "order on Wolt" labels stay on one line (narrowest phones: one card per row) */
+@media(max-width:860px){.mc{padding:20px}.mc span{font-size:13px;font-weight:500;letter-spacing:.03em}}
+@media(max-width:359px){.menu .mg{grid-template-rows:300px repeat(3,140px)}.mc:nth-child(n){grid-column:span 2}}
+@media(min-width:861px){.en .mp .row a{font-size:clamp(60px,9.6vw,184px)}}
 /* WHY */
 .why{position:relative;padding:clamp(90px,12vw,190px) max(24px,7vw);background:linear-gradient(90deg,rgba(24,14,8,.93),rgba(24,14,8,.8)),var(--pizza) 20% 60%/200%;overflow:hidden}
 .why p{max-width:520px;font-size:22px;line-height:1.6;color:#EBDCC6;margin-top:30px}

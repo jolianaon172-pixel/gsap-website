@@ -154,7 +154,8 @@ mm.add({desk:'(min-width:861px)',mob:'(max-width:860px)',motion:'(prefers-reduce
  var words=$('.row a',mp);
  if(!done.has(q('.row',mp)))G.set(words,{yPercent:105});
  reveal(q('.row',mp),function(){return []},{start:'top 85%',then:function(){G.fromTo($('.row a',mp),{yPercent:105},{yPercent:0,duration:1.3,ease:'expo.out',stagger:.12})}});
- if(c.desk)words.forEach(function(w,i){G.fromTo(w,{x:0},{x:(i%2?-1:1)*40,ease:'none',immediateRender:false,scrollTrigger:{trigger:mp,start:'top bottom',end:'bottom top',scrub:true}})});
+ if(c.desk)words.forEach(function(w,i){if(i>0&&i<words.length-1)return;
+  G.fromTo(w,{x:0},{x:function(){var r=w.parentNode.getBoundingClientRect(),b=w.getBoundingClientRect();return (b.left+b.width/2<r.left+r.width/2?1:-1)*32},ease:'none',immediateRender:false,invalidateOnRefresh:true,scrollTrigger:{trigger:mp,start:'top bottom',end:'bottom top',scrub:true}})});
 
  /* LAYER BY LAYER: pinned scene on desktop, scrubbed zoom-out on touch */
  var ex=q('.ex'),ph=q('.ph',ex),ext=q('.t',ex);
