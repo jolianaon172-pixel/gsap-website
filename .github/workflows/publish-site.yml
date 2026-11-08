@@ -1,0 +1,42 @@
+# Publishes the website to the gh-pages branch, which GitHub Pages serves.
+# Only the website files are published (no tools/, docs/ or README).
+# The live site follows the phase-5-seo branch. When the work is merged into main,
+# change "phase-5-seo" below to "main" (never list both, or an older branch could overwrite the site).
+name: Publish website
+
+on:
+  push:
+    branches: [phase-5-seo]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-site
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check asset versions
+        run: python3 tools/asset-versions.py --check
+      - name: Build the site folder
+        run: |
+          mkdir _site
+          cp -r index.html assets favicon.ico robots.txt _site/
+          if [ -f sitemap.xml ]; then cp sitemap.xml _site/; fi
+          touch _site/.nojekyll
+      - name: Push to gh-pages
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd _site
+          git init -q -b gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Publish ${GITHUB_SHA::7} from ${GITHUB_REF_NAME}"
+          git push -q -f "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages

@@ -5,3 +5,4 @@ Allow: /
 Disallow: /tools/
 Disallow: /docs/
 # The Sitemap line is added by tools/set-site-url.py once the site's real address is known.
+Sitemap: https://jolianaon172-pixel.github.io/gsap-website/sitemap.xml

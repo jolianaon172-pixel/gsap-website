@@ -30,6 +30,8 @@ assets/
   vendor/gsap/3.13.0/      GSAP 3.13.0: gsap, ScrollTrigger, SplitText, ScrollToPlugin (unmodified)
 favicon.ico                site icon (16/32/48 px)
 robots.txt                 crawler rules (Sitemap line added by tools/set-site-url.py)
+sitemap.xml                written by tools/set-site-url.py
+.github/workflows/         publish-site.yml: publishes the site to GitHub Pages
 tools/
   asset-versions.py        cache-busting helper (see "Caching and compression"); not part of the website
   set-site-url.py          adds the real domain where absolute URLs are needed (see "Search engines and sharing")
@@ -132,6 +134,18 @@ No analytics account or script is included, and nothing is sent anywhere by defa
 - It always fires a `manch:order-click` browser event (`event.detail` has the same fields), for any other tool.
 
 It never delays or blocks the link. When you add analytics, use **either** a Google Tag Manager trigger on the `order_click` event **or** gtag.js, not both for the same GA4 property, or each click is counted twice. Add a cookie/consent notice if the analytics you choose needs one.
+
+## Hosting (GitHub Pages)
+
+The site is published with **GitHub Pages** (free, HTTPS included):
+
+- Address: <https://jolianaon172-pixel.github.io/gsap-website/>
+- `.github/workflows/publish-site.yml` copies only the website files (`index.html`, `assets/`, `favicon.ico`, `robots.txt`, `sitemap.xml`) to the `gh-pages` branch on every push to `phase-5-seo`. GitHub Pages serves that branch. `tools/`, `docs/` and the README are not published.
+- One-time setting (repository owner): Settings → Pages → Build and deployment → Source "Deploy from a branch", branch `gh-pages`, folder `/ (root)`. Tick "Enforce HTTPS" if offered.
+- When the work is merged into `main`, change the branch name in the workflow from `phase-5-seo` to `main`.
+- GitHub Pages sets its own cache headers (10 minutes), so the `Cache-Control` table above applies only to a host that lets you set headers. The `?v=` versions still guarantee that visitors get changed files.
+
+**Own domain later** (for example `www.pizzamanch.co.il`): add it under Settings → Pages → Custom domain, point the domain's DNS to GitHub Pages as GitHub explains there, then run `python3 tools/set-site-url.py https://www.<domain>/` and `python3 tools/asset-versions.py`, and push. With an own domain, `robots.txt` is also at the domain root, where search engines read it (on the `github.io/gsap-website/` address they do not read it, which is harmless: the sitemap can be submitted in Google Search Console).
 
 ## Search engines and sharing (SEO)
 
