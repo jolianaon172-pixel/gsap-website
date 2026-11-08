@@ -13,7 +13,7 @@ assets/
     builder.css            pizza builder + cart styles
     main.css               self-hosted @font-face rules + all other styles (layout, sections, mobile, accessibility, motion)
   js/
-    core.js                navigation, mobile menu, skip link, language switch, no-GSAP reveal fallback
+    core.js                navigation, mobile menu, skip link, language switch, no-GSAP reveal fallback, order-click tracking
     builder-config.js      builder options: sizes, sauces, toppings, piece placement
     builder.js             builder engine + cart (validation, localStorage, cross-tab sync, on-demand builder images)
     motion.js              GSAP animations (only runs if GSAP loaded)
@@ -26,9 +26,14 @@ assets/
     layer-by-layer.avif/.jpg    "layer by layer" section photo
     toppings/*.webp        transparent topping pieces (onion, pepper, mushrooms, pepperoni, olives, corn)
   fonts/                   WOFF2 files: Frank Ruhl Libre, Heebo, Playfair Display
+  img/icons/               favicon PNGs (192 px, Apple touch icon); favicon.ico is in the root
   vendor/gsap/3.13.0/      GSAP 3.13.0: gsap, ScrollTrigger, SplitText, ScrollToPlugin (unmodified)
+favicon.ico                site icon (16/32/48 px)
+robots.txt                 crawler rules (Sitemap line added by tools/set-site-url.py)
 tools/
   asset-versions.py        cache-busting helper (see "Caching and compression"); not part of the website
+  set-site-url.py          adds the real domain where absolute URLs are needed (see "Search engines and sharing")
+docs/                      phase reports
 README.md
 ```
 
@@ -102,6 +107,51 @@ python3 tools/asset-versions.py --check  # verify (exit code 1 if anything is ou
 - **MIME types:** `.avif` → `image/avif`, `.webp` → `image/webp`, `.woff2` → `font/woff2`.
 - Serve over **HTTP/2 or HTTP/3**: the builder loads its 26 small images in parallel.
 - Don't deploy `tools/` (it's only a helper script).
+
+## Ordering (Wolt)
+
+All ordering goes through **Wolt**, the restaurant's ordering and checkout platform. The website has no checkout of its own. Every order button and link (13 in total: hero, info strip, menu cards, "more than pizza" links, cart, final section, footer, mobile bar) points to the same official page:
+
+```
+https://wolt.com/he/isr/haifa/restaurant/pizza-manch-haifa/items/menucategory-6
+```
+
+Phone (04-810-2091) stays as the secondary option: the info strip, the cart, the final section, the footer and the call button in the mobile bar.
+
+To change the Wolt address, replace that URL everywhere in `index.html` (all order links and the JSON-LD `OrderAction`). Each order link has a `data-order="…"` attribute naming its place on the page; keep it, because the click tracking uses it.
+
+**The pizza builder and cart** are a planning aid only. The cart stays on the visitor's device and is **not** sent to Wolt; the page says so next to the cart's Wolt button. Prices are shown as "set on Wolt".
+
+### Order-click tracking (analytics-ready, nothing installed)
+
+No analytics account or script is included, and nothing is sent anywhere by default. `assets/js/core.js` only records clicks on order links (left click, keyboard Enter, middle click) in a way any analytics tool can pick up:
+
+- `window.dataLayer.push({event:'order_click', order_platform:'wolt', order_location:'<data-order value>', page_language:'he'|'en'})`. It reuses an existing `dataLayer` (for example Google Tag Manager's) or creates one.
+- If `gtag()` (GA4) is on the page, it also calls `gtag('event','order_click',{order_platform, order_location, page_language, transport_type:'beacon'})`.
+- It always fires a `manch:order-click` browser event (`event.detail` has the same fields), for any other tool.
+
+It never delays or blocks the link. When you add analytics, use **either** a Google Tag Manager trigger on the `order_click` event **or** gtag.js, not both for the same GA4 property, or each click is counted twice. Add a cookie/consent notice if the analytics you choose needs one.
+
+## Search engines and sharing (SEO)
+
+What is already in place:
+- **Title and description:** Hebrew by default, switched to English with the language button. `<html lang>`/`dir` switch too.
+- **`robots.txt`:** everything allowed except `/tools/` and `/docs/`. `<meta name="robots">` allows large image previews.
+- **Favicon:** `favicon.ico` (16/32/48 px) and `assets/img/icons/` (192 px, Apple touch icon), made from the site's own seal (מאנצ׳).
+- **Structured data (JSON-LD `Restaurant`):** name (English + Hebrew), description, cuisine, phone, address, map link and the Wolt ordering action, all taken from what the site already says. It deliberately has no opening hours, prices, rating, menu or location coordinates, because none of these are verified yet. Add them only from confirmed information. Don't mark up the Google rating: Google ignores self-published ratings and can penalise them.
+- **Open Graph / Twitter:** title, description, locale and card type.
+
+What needs the real domain. These all need absolute URLs, so they are not published with placeholders. Once the site's address is known, run:
+
+```bash
+python3 tools/set-site-url.py https://www.example.co.il/   # use the real address
+python3 tools/asset-versions.py
+```
+
+This adds the canonical link, `og:url`, `og:image`/`twitter:image` (the existing pizza photo, 1004×1004) and the JSON-LD `url`/`image`/`@id`, writes `sitemap.xml`, and adds the `Sitemap:` line to `robots.txt`. It is safe to run again.
+
+Not done, and why:
+- **No `hreflang`:** the English version is a language switch on the same URL, not a separate page. `hreflang` needs one URL per language, for example a future `/en/` page.
 
 ## Replacing the photos
 

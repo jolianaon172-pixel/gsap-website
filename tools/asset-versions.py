@@ -13,7 +13,7 @@ Run it from the project root. Do not deploy the tools/ folder.
 import hashlib, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-EXT = r'(?:css|js|avif|webp|jpg|woff2)'
+EXT = r'(?:css|js|avif|webp|jpg|png|woff2)'
 HTML_REF = re.compile(r'(assets/[A-Za-z0-9_./-]+\.' + EXT + r')(\?v=[0-9a-f]{10})?')
 CSS_REF = re.compile(r'(\.\./(?:img|fonts)/[A-Za-z0-9_./-]+\.' + EXT + r')(\?v=[0-9a-f]{10})?')
 

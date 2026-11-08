@@ -86,7 +86,8 @@ nav.s{padding-block:16px}nav.s:before{content:"";position:absolute;inset:0;z-ind
 .mc:first-child .im{background:var(--pizza) 40% 45%/150%}
 .mc:nth-child(2) .im{background:radial-gradient(circle at 70% 25%,#8d4b27,#2a1a10 70%)}.mc:nth-child(3) .im{background:radial-gradient(circle at 30% 30%,#6b6a2c,#241a0e 72%)}.mc:nth-child(4) .im{background:radial-gradient(circle at 60% 30%,#a8581f,#2a1a10 70%)}
 .mc .n{position:absolute;z-index:1;top:16px;inset-inline-end:24px;font:900 80px/1 var(--serif);opacity:.18}
-.mc h3,.mc span{position:relative;z-index:1}.mc h3{font:900 clamp(34px,3.4vw,50px)/1 var(--serif)}.mc span{margin-top:12px;font-size:15px;letter-spacing:.06em;border-bottom:1px solid;width:max-content;padding-bottom:4px}
+.mc h3,.mc span{position:relative;z-index:1}.mc h3{font:900 clamp(34px,3.4vw,50px)/1 var(--serif)}.mc span{margin-top:12px;font-size:15px;letter-spacing:.06em;border-bottom:1px solid;width:max-content;max-width:100%;padding-bottom:4px}
+.nw{white-space:nowrap}
 /* EXPLODED */
 .ex{position:relative;height:100vh;height:100svh;background:#070606;overflow:hidden}
 .ex .st{position:relative;height:100vh;height:100svh;display:flex;align-items:center;justify-content:center;overflow:hidden}
