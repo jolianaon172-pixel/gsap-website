@@ -1,6 +1,6 @@
 # gsap-website
 
-Website for **Pizza Manch Haifa** (פיצה מאנצ׳ חיפה). Hebrew (RTL) by default, with an English (LTR) switch, a pizza builder, a local cart and GSAP animations.
+Website for **Pizza Manch Haifa** (פיצה מאנצ׳ חיפה). Hebrew (RTL) by default, with an English (LTR) switch, a visual pizza builder (preview only), ordering on Wolt and GSAP animations.
 
 It's a plain static site: HTML, CSS, JavaScript, images and fonts. There is no framework, build step or package to install, and it loads nothing from third-party servers.
 
@@ -10,12 +10,12 @@ It's a plain static site: HTML, CSS, JavaScript, images and fonts. There is no f
 index.html                 page markup (all sections, both languages)
 assets/
   css/
-    builder.css            pizza builder + cart styles
+    builder.css            pizza builder styles
     main.css               self-hosted @font-face rules + all other styles (layout, sections, mobile, accessibility, motion)
   js/
     core.js                navigation, mobile menu, skip link, language switch, no-GSAP reveal fallback, order-click tracking
     builder-config.js      builder options: sizes, sauces, toppings, piece placement
-    builder.js             builder engine + cart (validation, localStorage, cross-tab sync, on-demand builder images)
+    builder.js             builder preview engine (live summary, topping placement, on-demand builder images)
     motion.js              GSAP animations (only runs if GSAP loaded)
   img/
     pizza-1004.avif        main pizza photo, AVIF: hero <img> and the section backgrounds
@@ -47,7 +47,7 @@ README.md
 
 - **Hero:** a real `<img>` inside a `<picture>` (AVIF, JPEG fallback) with `fetchpriority="high"`, preloaded in `<head>`. The section backgrounds use the same file, so the photo is downloaded once.
 - **Layer-by-layer photo:** `loading="lazy"`.
-- **Builder images** (base, cheese and no-sauce layers, topping pieces) are only requested when the builder comes within about 1.5 screens of the viewport, or when the cart needs to draw a thumbnail. Without JavaScript they load normally, so the CSS-only builder keeps working. While they load, the preview shows a placeholder disc; the pizza appears only once all its images are in, so it never shows half-built.
+- **Builder images** (base, cheese and no-sauce layers, topping pieces) are only requested when the builder comes within about 1.5 screens of the viewport. Without JavaScript they load normally, so the CSS-only builder keeps working. While they load, the preview shows a placeholder disc; the pizza appears only once all its images are in, so it never shows half-built.
 - **AVIF fallback:** browsers without AVIF get the JPEG/WebP through `<picture>` and `image-set()` type selection. If an AVIF still fails to load or decode, `core.js`/`builder.js` add `no-avif` to `<html>` and every image switches to the original JPEG/WebP.
 - **Fonts:** self-hosted copies of the exact Google Fonts files the site used before. `font-display: swap`. The three fonts the first screen needs are preloaded; the others download only if the page uses their characters.
 
@@ -57,6 +57,8 @@ README.md
 - **Phase 1:** critical fixes, on the `phase-1-critical-fixes` branch.
 - **Phase 2:** the single file split into this structure, on the `phase-2-code-structure` branch.
 - **Phase 3:** performance: AVIF images, a real hero image, on-demand builder images, self-hosted fonts and GSAP, deferred scripts, a shorter loader, cache-busting references.
+- **Phase 4:** accessibility (WCAG 2.2 AA), on the `phase-4-accessibility` branch.
+- **Phase 5:** SEO and local search, Wolt as the ordering platform, the builder made a preview only (its cart removed), on the `phase-5-seo` branch.
 
 ## Running the website locally
 
@@ -72,7 +74,7 @@ npx serve .
 
 Then open <http://localhost:8000> (for `npx serve`, use the address it prints).
 
-**Use a local server rather than double-clicking `index.html`.** When the page is opened straight from disk (`file://`), browsers block the canvas from reading the image files. Everything else works, but the cart can't draw its pizza thumbnails, so they appear blank. On a web server (local or live) thumbnails work normally.
+**Use a local server rather than double-clicking `index.html`.** It is closest to how the live site is served.
 
 The site needs no internet connection: fonts, GSAP and all images are in `assets/`.
 
@@ -80,7 +82,6 @@ The site needs no internet connection: fonts, GSAP and all images are in `assets
 
 - **Mobile layout:** use your browser's device toolbar (Chrome DevTools: Ctrl+Shift+M / Cmd+Shift+M). The mobile layout starts at 860 px wide and below.
 - **Language:** use the `EN` / `עברית` button in the navigation bar.
-- **Reset the cart:** in DevTools, go to Application → Local Storage and delete the `manch.cart.v1` key. Or use the "ריקון הסל" (Empty cart) button.
 - **Reduced motion:** turn on "Reduce motion" in your operating system (or emulate it in DevTools → Rendering) to check the no-animation version.
 - **Slow connection:** DevTools → Network → throttling "Slow 4G".
 
@@ -110,17 +111,17 @@ python3 tools/asset-versions.py --check  # verify (exit code 1 if anything is ou
 
 ## Ordering (Wolt)
 
-All ordering goes through **Wolt**, the restaurant's ordering and checkout platform. The website has no checkout of its own. Every order button and link (13 in total: hero, info strip, menu cards, "more than pizza" links, cart, final section, footer, mobile bar) points to the same official page:
+All ordering goes through **Wolt**, the restaurant's ordering and checkout platform. The website has no checkout of its own. Every order button and link (13 in total: hero, info strip, menu cards, "more than pizza" links, pizza builder, final section, footer, mobile bar) points to the same official page:
 
 ```
 https://wolt.com/he/isr/haifa/restaurant/pizza-manch-haifa/items/menucategory-6
 ```
 
-Phone (04-810-2091) stays as the secondary option: the info strip, the cart, the final section, the footer and the call button in the mobile bar.
+Phone (04-810-2091) stays as the secondary option: the info strip, the final section, the footer and the call button in the mobile bar (the builder's note also gives the number).
 
 To change the Wolt address, replace that URL everywhere in `index.html` (all order links and the JSON-LD `OrderAction`). Each order link has a `data-order="…"` attribute naming its place on the page; keep it, because the click tracking uses it.
 
-**The pizza builder and cart** are a planning aid only. The cart stays on the visitor's device and is **not** sent to Wolt; the page says so next to the cart's Wolt button. Prices are shown as "set on Wolt".
+**The pizza builder is a preview for inspiration only.** It has no cart, no prices and no checkout, saves nothing and sends nothing. Its combinations are not something a customer can order as such; the note next to its "Order on Wolt" button says so and points to the Wolt menu (or the phone). The site removes the cart that the earlier version kept in the browser (`localStorage` key `manch.cart.v1`). Don't add prices or an "add to order" step to the builder unless Wolt itself can take that exact pizza.
 
 ### Order-click tracking (analytics-ready, nothing installed)
 

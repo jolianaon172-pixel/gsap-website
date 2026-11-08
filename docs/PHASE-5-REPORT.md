@@ -1,6 +1,6 @@
-# Pizza Manch Haifa: Phase 5 report (SEO, local search, Wolt ordering)
+# Pizza Manch Haifa: Phase 5 report (SEO, local search, Wolt ordering, preview-only builder)
 
-Status: **complete. Not committed, not pushed.** Branch `phase-5-seo`, created from `phase-4-accessibility` @ `5b0b41e`. `main` (`a9a01f2`) and all earlier phase branches are unchanged.
+Status: **approved and complete.** Branch `phase-5-seo`, created from `phase-4-accessibility` @ `5b0b41e`. `main` (`a9a01f2`) and all earlier phase branches are unchanged. Part C (the builder made a preview only) was done after the approval of Parts A and B, as you asked.
 
 ## Part A: SEO and local search
 
@@ -31,7 +31,7 @@ Already good: Hebrew title and description; `lang`/`dir`, title and description 
 ### What changed
 - **All 13 order links** point to exactly `https://wolt.com/he/isr/haifa/restaurant/pizza-manch-haifa/items/menucategory-6`. They used to point to `order.bitetech.co.il`, which is now gone from the site, JS and README; only the committed Phase 4 report keeps a historical mention.
 - **JSON-LD `OrderAction`** target is now the Wolt URL.
-- **Each link has `data-order`** naming its place: `hero`, `strip`, `menu-pizzas`, `menu-pastas`, `menu-salads`, `menu-sides`, `more-pizza`, `more-pasta`, `more-salad`, `cart`, `final`, `footer`, `mobile-bar`.
+- **Each link has `data-order`** naming its place: `hero`, `strip`, `menu-pizzas`, `menu-pastas`, `menu-salads`, `menu-sides`, `more-pizza`, `more-pasta`, `more-salad`, `builder` (was `cart` before Part C), `final`, `footer`, `mobile-bar`.
 - **Links open in the same tab**, as before.
 
 | Place | Hebrew | English |
@@ -41,16 +41,13 @@ Already good: Hebrew title and description; `lang`/`dir`, title and description 
 | Menu intro | כל המנות והמחירים המלאים נמצאים ב-Wolt. | The full dishes and prices are on Wolt. |
 | Menu cards (4) | להזמנה ב-Wolt ← | Order on Wolt → |
 | "More than pizza" links (3) | פיצה / פסטה / סלט + hidden "– להזמנה ב-Wolt" for screen readers | Pizza / Pasta / Salad + hidden "– order on Wolt" |
-| Cart button | המשיכו להזמנה ב-Wolt | Continue to order on Wolt |
-| Cart note | …ולא מועבר ל-Wolt… | …It is not sent to Wolt… |
-| Builder price line | המחיר נקבע ב-Wolt | Price is set on Wolt |
+| Pizza builder (Part C; replaces the cart button) | הזמינו ב-Wolt | Order on Wolt |
 | Final section | הזמינו עכשיו ב-Wolt | Order now on Wolt |
 | Footer | הזמנה ב-Wolt | Order on Wolt |
 | Mobile bar | הזמינו ב-Wolt (+ call button) | Order on Wolt (+ call button) |
-| No-JS note | …ולהזמין ב-Wolt או בטלפון… | …order on Wolt or by phone… |
 | Meta / OG description (HE + EN switch) | הזמינו ב-Wolt מפיצה מאנצ׳ חיפה… | Order on Wolt from Pizza Manch Haifa… |
 
-- **Phone stays secondary**, unchanged: the info strip, the cart (call link), the final section, the footer and the call button in the mobile bar.
+- **Phone stays secondary**, unchanged: the info strip, the final section, the footer and the call button in the mobile bar (until Part C the cart also had a call link; the builder note now gives the number).
 - **No new products, prices, availability or promotions.** No checkout was created.
 - **"Wolt" is marked `lang="en"`** inside Hebrew text, so screen readers pronounce it correctly (WCAG 3.1.2).
 
@@ -69,18 +66,53 @@ In `core.js`, about 10 lines. It records left clicks, keyboard Enter and middle 
 
 It never calls `preventDefault` and never delays navigation. Nothing is sent anywhere until someone installs an analytics tool. README: use either a GTM trigger or gtag.js for a GA4 property, not both, or each click counts twice; a consent notice may be needed.
 
-### Should the pizza builder stay? Recommendation: keep it for now, but your decision is needed
-- **What helps customers:** the visual "build your pizza" preview is the site's most distinctive feature. It is working, accessible (Phase 4) and loads its images only on demand (Phase 3).
-- **The problem:** its cart is a second, parallel ordering flow. It is not sent to Wolt, has no prices, and its sizes and toppings are not verified against the Wolt menu. A customer can build a pizza on the site and then not find the same options on Wolt.
-- **What I did now:** kept it working, with the cart's button going to Wolt and clear notes ("not sent to Wolt", "Price is set on Wolt"). Nothing removed.
-- **Options for you:**
-  1. Keep it as it is.
-  2. Reframe the cart as a "my pizza list" (copy it, or read it to us by phone), and drop the "order summary" wording.
-  3. Remove the cart and keep only the visual builder, linked to Wolt.
+### The pizza builder
+Assessment given before the decision: the visual preview is the site's most distinctive feature, but its cart was a second, parallel ordering flow. The cart was not sent to Wolt, had no prices, and its options were not verified against the Wolt menu. Your decision: keep the visual builder and remove the cart. See Part C.
 
-  For options 1 and 2, the restaurant should confirm the toppings and sizes match Wolt. My suggestion is option 2 or 3 once the real Wolt menu is confirmed.
+## Part C: the builder is a preview only (cart and checkout removed)
 
-## Tests (all on the final working tree)
+**What was removed**
+- The "Add to cart" button, the whole cart panel (list, quantities, edit, remove, order summary, "Copy order details", "Empty cart"), the cart's Wolt button and note, and the cart's no-JavaScript note.
+- From `builder.js` (about 23 KB → 10 KB): the cart code, `localStorage`, cross-tab sync, saved-cart validation and canvas thumbnails.
+- The unused `prices` option from `builder-config.js`.
+- The cart's reveal animation from `motion.js`.
+- The cart and thumbnail styles from `builder.css`.
+
+**What changed**
+- **Builder copy:** "השראה לפיצה / PIZZA INSPIRATION", "שחקו עם התוספות. / Play with the toppings.", and the intro ends with "תצוגה להשראה בלבד, לא הזמנה. / A preview for inspiration only, not an order."
+- **Summary:** now labelled "בתצוגה: / Preview: …". No prices.
+- **One clear "הזמינו ב-Wolt / Order on Wolt" button** (`data-order="builder"`, tracked like the other order links). Right below it: "זו תצוגה בלבד. את הפיצה שבניתם כאן אי אפשר להזמין כמו שהיא, והיא לא מועברת ל-Wolt. מזמינים מהתפריט ב-Wolt או בטלפון 04-810-2091." / "This is a preview only. The pizza you made here cannot be ordered as it is and is not sent to Wolt. Order from the menu on Wolt, or call 04-810-2091."
+- **Remaining tools:** "התחלה מחדש / Start over" (was "Start a new pizza") and "פיזור מחדש של התוספות / Rearrange toppings".
+- **Error text:** if the preview images fail, the message now points to ordering on Wolt (it used to mention the cart).
+- **Layout:** two columns, controls and preview, on wide screens (was three with the cart). The tablet and phone layouts are unchanged.
+- **No storage:** the site no longer stores anything. A cart saved by the earlier version (`manch.cart.v1`) is deleted when the page loads.
+- **Unchanged:** the preview itself, image readiness, accessibility, keyboard use and the CSS-only fallback without JavaScript.
+- **README** updated: ordering, builder, structure, testing tips, history.
+
+**Part C tests**
+- **Builder checks: 46/46.**
+  - In both languages:
+    - no cart elements and no cart, price, add-to-order or checkout wording in the builder
+    - one visible Wolt button with the exact URL and the right accessible name
+    - the note says preview only, cannot be ordered, not sent to Wolt
+    - the summary is labelled as a preview
+    - only the two preview tools remain
+    - 13 order links on the page
+  - The preview works: toppings, size and sauce, "Rearrange", "Start over", the language switch, and keyboard (arrows, Space). Nothing is written to `localStorage`.
+  - The builder's Wolt click is tracked as `builder` and goes to Wolt. An old saved cart is deleted on load.
+  - Without JavaScript: the button and note are visible, the JavaScript-only tools are hidden, and the CSS-only preview works.
+  - Scrolling the whole page with GSAP and with reduced motion: no errors.
+  - 320–1440 px in both languages: no overflow, no overlap, and the button stays inside the layout.
+- **Wolt checks: 108/108** (location `builder` in place of `cart`).
+- **Regression, cart-free versions of the earlier suites:** the cart checks were removed because there is no cart; every other check is unchanged.
+  - Core functional and security suite: 77/77. This includes 6 old or malicious saved carts (and the same arriving from another tab) that are now ignored, deleted and never injected; plus `localStorage` that throws and the older-Safari simulation.
+  - Phase 3 checks: 54/54. The undecodable-AVIF case now checks that the preview is shown from the WebP fallback.
+  - Keyboard journey: 90/90. The cart steps were replaced by the builder's Wolt link and "Start over" by keyboard.
+  - Builder readiness: 26/26.
+  - axe: 0 violations in 22 scans.
+- **Lighthouse:** SEO 100. Mobile LCP 3.15 s, desktop 0.70 s, CLS ≤ 0.005. 489 KB / 21 requests, 6 KB less than before Part C.
+
+## Tests for Parts A and B (run before Part C)
 - **Wolt checks: 106/106.**
   - Hebrew and English: 13 links, each exactly the official URL. No other Wolt links. Zero BiteTech in the live DOM. JSON-LD target is Wolt. Same-tab behaviour. Every label names Wolt. 5 phone links remain.
   - The accessible name of every visible order link contains its visible label (checked from the browser's accessibility tree).
@@ -93,7 +125,7 @@ It never calls `preventDefault` and never delays navigation. Nothing is sent any
     - phone, menu and language links send nothing
     - a click on the arrow icon counts
   - Real navigation reaches Wolt (stubbed) with and without gtag: mouse on the hero, the mobile bar and a menu card, plus keyboard Enter. Middle click is counted once; right click is not counted. No console errors.
-  - Layout at 320/390/768/1440, Hebrew and English: no horizontal overflow, buttons inside the viewport, menu-card labels inside their cards, "ב-Wolt" never split. At 320 px the cart and final buttons wrap to two lines; Phase 4 also wrapped there.
+  - Layout at 320/390/768/1440, Hebrew and English: no horizontal overflow, buttons inside the viewport, menu-card labels inside their cards, "ב-Wolt" never split. At 320 px the (then) cart button and the final button wrap to two lines; Phase 4 also wrapped there.
 - **Structured data:** valid JSON. Checked against the schema.org vocabulary (schema-dts 2.1.0; schema.org itself is blocked here): 0 errors in the repo version and with a domain filled in by the helper. No unverifiable claims. The earlier negative control (invented property, wrong type, invented hours) was caught.
 - **Helper:** tested on a scratch copy:
   - Run twice: one canonical, one og:image, one twitter:image, one JSON-LD `@id`, one Sitemap line.
@@ -109,14 +141,16 @@ It never calls `preventDefault` and never delays navigation. Nothing is sent any
 ## Remaining limitations
 1. **The real domain is needed** for the canonical link, social image, sitemap and JSON-LD `url`. One command once it is known (README).
 2. **One Wolt URL for everything:** the Hebrew page (`/he/`) and category `menucategory-6` are used for both languages and all menu cards. An English Wolt URL or per-category links were not given, so they were not guessed. No UTM parameters were added; Wolt's own reports may not show them anyway.
-3. **The builder's options are not verified against the Wolt menu** (see the builder section).
+3. **The builder's options are not verified against the Wolt menu.** Now that the builder is clearly a preview only, this matters less. If the restaurant wants it to match the menu, change `builder-config.js` and the controls in `index.html`.
 4. **English SEO:** English is only reachable through the language button on the same URL. Ranking in English needs a separate `/en/` page with `hreflang` (future phase).
 5. **Local ranking** depends mostly on the Google Business Profile. The reviews and directions links are Google Maps searches, because no verified place ID exists in the project.
 6. **The h1 is the slogan.** The brand and city are in the title, the description and the eyebrow. Left unchanged to avoid a design change.
 7. **Not tested:** the real wolt.com page (blocked here, so it was stubbed in tests), Google's Rich Results Test, Search Console, social preview tools, and a real analytics account. Real devices and screen readers were not used; accessibility checks were automated.
 
 ## Git
-- **Modified:** `index.html`, `README.md` (new "Ordering (Wolt)" and "Search engines and sharing" sections), `assets/css/main.css`, `assets/js/core.js`, `assets/js/builder.js`, `tools/asset-versions.py`.
-- **New:** `robots.txt`, `favicon.ico`, `assets/img/icons/icon-192.png`, `assets/img/icons/apple-touch-icon.png`, `tools/set-site-url.py`.
-- `git diff --check` is clean, asset versions are up to date and the JS syntax is OK.
-- **Not committed, not pushed.** Phase 6 has not started.
+- **Parts A and B:** commit `5c9c900` on `phase-5-seo`, pushed.
+  - Modified: `index.html`, `README.md`, `assets/css/main.css`, `assets/js/core.js`, `assets/js/builder.js`, `tools/asset-versions.py`.
+  - New: `robots.txt`, `favicon.ico`, the two icons, `tools/set-site-url.py`, this report.
+- **Part C:** a second commit on `phase-5-seo`, pushed.
+  - Modified: `index.html`, `README.md`, `assets/css/builder.css`, `assets/js/builder.js`, `assets/js/builder-config.js`, `assets/js/motion.js`, this report.
+- `git diff --check` is clean and asset versions are up to date. `main` was not modified and nothing was merged.

@@ -14,7 +14,6 @@ window.MANCH_BUILDER_CONFIG={
   {id:'corn',he:'תירס',en:'Corn',n:36,w:.034,g:1,z:7}],
  groups:[{he:'גבינה ובשר',en:'Cheese & meat'},{he:'ירקות',en:'Vegetables'}],
  radius:.335, /* max distance of a piece centre from the pizza centre (share of image width): keeps pieces inside the crust */
- prices:null, /* only verified menu prices, e.g. {size:{s:0,m:0,l:0},topping:{pepperoni:0},sauce:{none:0}} */
  /* best-candidate sampling: natural, non-grid spread that avoids pieces already on the pizza */
  place:function(t,variants,r,others,radius){var own=[],out=[],R=radius-t.w*.32,oth=[];
   others.forEach(function(o){o.ps.forEach(function(p){oth.push([p.x-.5,p.y-.5,o.w])})});

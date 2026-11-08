@@ -167,12 +167,11 @@ mm.add({desk:'(min-width:861px)',mob:'(max-width:860px)',motion:'(prefers-reduce
   reveal(ext,list('.eye,h2',ext),{start:'top 80%'})}
 
  /* BUILDER: the pizza rolls in, controls cascade */
- var bd=q('#build'),pv=q('#pv'),bh=q('.bd-hd',bd),bc=q('.bd-ctl',bd),cartEl=q('#cart');
+ var bd=q('#build'),pv=q('#pv'),bh=q('.bd-hd',bd),bc=q('.bd-ctl',bd);
  reveal(bh,list('.eye,h2,p',bh));
  if(!done.has(pv)){G.set(pv,{autoAlpha:0});ST.create({trigger:pv,start:'top 85%',once:true,onEnter:function(){ctx.add(function(){done.add(pv);G.set(pv,{autoAlpha:1});
   G.from(pv,c.desk?{scale:.72,rotation:-90,autoAlpha:0,duration:1.8,ease:'expo.out',clearProps:'transform'}:{y:40,autoAlpha:0,duration:1.2,ease:'expo.out',clearProps:'transform'})})}})}
  reveal(bc,function(){return $('#bctl h3,#bctl label',bc).concat($('.bd-add',bc))},{gap:.03,y:22,start:'top 82%'});
- reveal(cartEl,[cartEl],{start:'top 88%'});
 
  /* WHY / REVIEWS / FINAL / FOOTER */
  var why=q('.why .rv');reveal(why,list('.eye,h2,p,li',why));
